@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://b4hokgkltdlyf"]
+
+[ext_resource type="Script" uid="uid://bv6chpy24lxdo" path="res://world/world_handler.gd" id="1_4pufg"]
+[ext_resource type="PackedScene" uid="uid://duuwtppa4sqgo" path="res://entities/player/player_character.tscn" id="1_6i3v4"]
+[ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://world/ui_control.gd" id="3_5aanf"]
+[ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
+[ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
+
+[sub_resource type="Environment" id="Environment_6i3v4"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_4pufg"]
+
+[sub_resource type="Compositor" id="Compositor_5aanf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o6l3f"]
+size = Vector2(100, 100)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uk7ad"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kfwvu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6l3f"]
+size = Vector3(2, 1, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o6l3f"]
+size = Vector3(2, 1, 1.5)
+
+[sub_resource type="TorusMesh" id="TorusMesh_6i3v4"]
+inner_radius = 5.0
+outer_radius = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o6l3f"]
+radius = 8.006609
+
+[sub_resource type="LabelSettings" id="LabelSettings_o6l3f"]
+font_size = 30
+
+[node name="MainWorld" type="Node3D" unique_id=514236664]
+
+[node name="WorldHandler" type="Node3D" parent="." unique_id=1527563304]
+unique_name_in_owner = true
+script = ExtResource("1_4pufg")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldHandler" unique_id=1387091601]
+environment = SubResource("Environment_6i3v4")
+camera_attributes = SubResource("CameraAttributesPractical_4pufg")
+compositor = SubResource("Compositor_5aanf")
+
+[node name="WorldLight" type="DirectionalLight3D" parent="WorldHandler/WorldEnvironment" unique_id=1344324537]
+unique_name_in_owner = true
+transform = Transform3D(0.9449231, 0.1119378, -0.3075554, 0.0693324, 0.8499095, 0.52234757, 0.31986466, -0.5149018, 0.79533815, 0, 5.7505045, 7.2648373)
+shadow_enabled = true
+
+[node name="Day_NightTimer" type="Timer" parent="WorldHandler" unique_id=1882201535]
+unique_name_in_owner = true
+wait_time = 5.0
+autostart = true
+
+[node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
+
+[node name="WorldMesh" type="MeshInstance3D" parent="WorldGround" unique_id=1616564084]
+mesh = SubResource("PlaneMesh_o6l3f")
+
+[node name="WorldCollision" type="CollisionShape3D" parent="WorldGround" unique_id=1549030858]
+shape = SubResource("WorldBoundaryShape3D_uk7ad")
+
+[node name="HomeBae" type="Node3D" parent="." unique_id=1859075692]
+
+[node name="BaseBuilding" type="StaticBody3D" parent="HomeBae" unique_id=94449327]
+physics_material_override = SubResource("PhysicsMaterial_kfwvu")
+
+[node name="BaseCollision" type="CollisionShape3D" parent="HomeBae/BaseBuilding" unique_id=1256245314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_o6l3f")
+
+[node name="BaseMesh" type="MeshInstance3D" parent="HomeBae/BaseBuilding" unique_id=1459154400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_o6l3f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HomeBae" unique_id=576905168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4546661, 0)
+mesh = SubResource("TorusMesh_6i3v4")
+
+[node name="InteractionArea" type="Area3D" parent="HomeBae" unique_id=317824548]
+
+[node name="ResearchArea" type="CollisionShape3D" parent="HomeBae/InteractionArea" unique_id=341682418]
+shape = SubResource("SphereShape3D_o6l3f")
+
+[node name="Timer" type="Timer" parent="HomeBae/InteractionArea/ResearchArea" unique_id=193763423]
+
+[node name="Entities" type="Node3D" parent="." unique_id=1342972052]
+
+[node name="PlayerCharacter" parent="Entities" unique_id=1825023238 instance=ExtResource("1_6i3v4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.879191, 0.18245387, 0)
+
+[node name="EnemySpawner" type="Node3D" parent="Entities" unique_id=1442707549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6614411, 0, -4.041055)
+script = ExtResource("3_8qjvd")
+enemy_types = Array[PackedScene]([ExtResource("4_rsju0")])
+
+[node name="EnemySpawnTimer" type="Timer" parent="Entities/EnemySpawner" unique_id=179378876]
+unique_name_in_owner = true
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1752003936]
+layer = 10
+
+[node name="UIControl" type="Control" parent="UILayer" unique_id=1884960614]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("3_5aanf")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/UIControl" unique_id=1781232665]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="WorldProgress" type="ProgressBar" parent="UILayer/UIControl/MarginContainer" unique_id=1435597879]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 40)
+custom_maximum_size = Vector2(500, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 15.0
+step = 1.0
+rounded = true
+show_percentage = false
+
+[node name="Day_NightLabel" type="Label" parent="UILayer/UIControl" unique_id=2071885299]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -526.0
+offset_top = 32.0
+offset_right = 526.0
+offset_bottom = 74.0
+grow_horizontal = 2
+size_flags_vertical = 0
+text = "DAY"
+label_settings = SubResource("LabelSettings_o6l3f")
+horizontal_alignment = 1
+
+[connection signal="timeout" from="WorldHandler/Day_NightTimer" to="WorldHandler" method="_on_timer_timeout"]

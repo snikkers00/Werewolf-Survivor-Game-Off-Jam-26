@@ -1,0 +1,6 @@
+extends Node
+
+signal phase_changed(is_night : bool)
+signal resource_collected(resource, amount : int)
+signal xp_gained(amount : int)
+signal level_up_triggered(new_level : int)

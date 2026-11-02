@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://35qpp0350sd3"]
+
+[ext_resource type="PackedScene" uid="uid://d1y33viv3v5py" path="res://entities/enemies/enemy_body.tscn" id="1_eo5vw"]
+
+[node name="enemy_character" type="Node3D" unique_id=720260743]
+
+[node name="EnemyBody" parent="." unique_id=996570798 instance=ExtResource("1_eo5vw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16708852, 0)
