@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhbuvx6eiimey" path="res://entities/enemies/enemy_body.gd" id="1_ajstd"]
 [ext_resource type="Texture2D" uid="uid://22tpa8o2w5h8" path="res://entities/player/sprites/16x32 Walk-Sheet.png" id="1_iqk4o"]
+[ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_mykbo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mlbij"]
 atlas = ExtResource("1_iqk4o")
@@ -157,12 +158,12 @@ height = 0.24069214
 
 [node name="EnemyBody" type="CharacterBody3D" unique_id=996570798 groups=["Enemy"]]
 collision_layer = 4
-collision_mask = 23
+collision_mask = 21
 axis_lock_linear_y = true
 script = ExtResource("1_ajstd")
 
 [node name="EnemySprite" type="AnimatedSprite3D" parent="." unique_id=1948147315]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16450268, 0)
+unique_name_in_owner = true
 modulate = Color(1, 0.78431374, 0.78431374, 1)
 shaded = true
 double_sided = false
@@ -170,19 +171,9 @@ alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_o6l3f")
 
 [node name="EnemyCollision" type="CollisionShape3D" parent="." unique_id=1626003485]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14324604, 0)
 shape = SubResource("CapsuleShape3D_b6xf8")
 
-[node name="HurtBox" type="Area3D" parent="." unique_id=1352416674]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00061737, 0)
-
-[node name="EnemyCollision2" type="CollisionShape3D" parent="HurtBox" unique_id=1599036643]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12726307, 0)
-shape = SubResource("CapsuleShape3D_b6xf8")
-
-[node name="HitBox" type="Area3D" parent="." unique_id=1352395168]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00061737, 0)
-
-[node name="EnemyCollision3" type="CollisionShape3D" parent="HitBox" unique_id=1613861708]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12726307, 0)
-shape = SubResource("CapsuleShape3D_b6xf8")
+[node name="Health" type="Node" parent="." unique_id=1249439681]
+script = ExtResource("3_mykbo")
+health = 2
+metadata/_custom_type_script = "uid://dmmwsrob8v0es"

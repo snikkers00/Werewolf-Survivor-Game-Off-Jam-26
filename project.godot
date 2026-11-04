@@ -71,6 +71,9 @@ interact={
 3d_physics/layer_4="Interactable"
 3d_physics/layer_5="PlayerAttacks"
 3d_physics/layer_6="BaseAura"
+3d_physics/layer_7="AllyHitBox"
+3d_physics/layer_8="EnemyHitBox"
+3d_physics/layer_9="EnemyHurtBox"
 
 [physics]
 

@@ -1,9 +1,12 @@
 extends CharacterBody3D
 
+@onready var health: Health = $Health
 
 const SPEED = 2.5
 const JUMP_VELOCITY = 4.5
 
+func _ready():
+	health.death.connect(_on_death)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -22,3 +25,6 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+func _on_death():
+	queue_free()

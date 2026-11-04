@@ -53,7 +53,7 @@ shadow_enabled = true
 
 [node name="Day_NightTimer" type="Timer" parent="WorldHandler" unique_id=1882201535]
 unique_name_in_owner = true
-wait_time = 5.0
+wait_time = 20.0
 autostart = true
 
 [node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
@@ -91,7 +91,7 @@ shape = SubResource("SphereShape3D_o6l3f")
 [node name="Entities" type="Node3D" parent="." unique_id=1342972052]
 
 [node name="PlayerCharacter" parent="Entities" unique_id=1825023238 instance=ExtResource("1_6i3v4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.879191, 0.18245387, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.879191, 0.01768972, 0)
 
 [node name="EnemySpawner" type="Node3D" parent="Entities" unique_id=1442707549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6614411, 0, -4.041055)
