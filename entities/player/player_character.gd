@@ -1,12 +1,14 @@
 extends CharacterBody3D
 
 @onready var health: Health = $Health
+@onready var player_sprite : AnimatedSprite3D = %PlayerSprite
 
 const SPEED = 2.5
 const JUMP_VELOCITY = 4.5
 
 func _ready():
 	health.death.connect(_on_death)
+	EventsBus.phase_changed.connect(shapeshift)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -28,3 +30,9 @@ func _physics_process(delta):
 
 func _on_death():
 	queue_free()
+
+func shapeshift(is_night):
+	if is_night == true:
+		create_tween().tween_property(player_sprite, "modulate", Color.DIM_GRAY, 3)
+	elif is_night == false:
+		create_tween().tween_property(player_sprite, "modulate", Color.WHITE, 3)

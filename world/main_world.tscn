@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
 
 [sub_resource type="Environment" id="Environment_6i3v4"]
+background_mode = 1
+background_color = Color(0.99243873, 0.7950196, 0.8058209, 1)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_4pufg"]
 
@@ -50,10 +52,11 @@ compositor = SubResource("Compositor_5aanf")
 unique_name_in_owner = true
 transform = Transform3D(0.9449231, 0.1119378, -0.3075554, 0.0693324, 0.8499095, 0.52234757, 0.31986466, -0.5149018, 0.79533815, 0, 5.7505045, 7.2648373)
 shadow_enabled = true
+shadow_opacity = 0.9
 
 [node name="Day_NightTimer" type="Timer" parent="WorldHandler" unique_id=1882201535]
 unique_name_in_owner = true
-wait_time = 20.0
+wait_time = 10.0
 autostart = true
 
 [node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
@@ -100,6 +103,7 @@ enemy_types = Array[PackedScene]([ExtResource("4_rsju0")])
 
 [node name="EnemySpawnTimer" type="Timer" parent="Entities/EnemySpawner" unique_id=179378876]
 unique_name_in_owner = true
+wait_time = 0.5
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1752003936]
 layer = 10
@@ -148,3 +152,6 @@ label_settings = SubResource("LabelSettings_o6l3f")
 horizontal_alignment = 1
 
 [connection signal="timeout" from="WorldHandler/Day_NightTimer" to="WorldHandler" method="_on_timer_timeout"]
+
+[editable path="Entities/PlayerCharacter"]
+[editable path="Entities/PlayerCharacter/AttackManager/Attack"]

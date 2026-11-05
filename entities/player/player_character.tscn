@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://b581qiyy2dqp8" path="res://entities/player/player_character.gd" id="1_b5xsv"]
 [ext_resource type="Texture2D" uid="uid://22tpa8o2w5h8" path="res://entities/player/sprites/16x32 Walk-Sheet.png" id="1_rypbc"]
 [ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_gnhdx"]
+[ext_resource type="Script" uid="uid://c6g5u3i4t7f8q" path="res://entities/player/attack_manager.gd" id="4_wepyd"]
+[ext_resource type="PackedScene" uid="uid://dmy6pbvxwb63r" path="res://entities/player/attacks/attack.tscn" id="5_5nbuu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6l3f"]
 radius = 0.08544922
@@ -169,7 +171,8 @@ script = ExtResource("1_b5xsv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14235505, 0)
 shape = SubResource("CapsuleShape3D_o6l3f")
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=187975107]
+[node name="PlayerSprite" type="AnimatedSprite3D" parent="." unique_id=187975107]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18178377, 0)
 billboard = 2
 shaded = true
@@ -190,7 +193,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00061737, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1392107, 0)
 shape = SubResource("CapsuleShape3D_0ny5y")
 
+[node name="InvulnTimer" type="Timer" parent="HurtBox" unique_id=263199463]
+wait_time = 0.25
+one_shot = true
+
 [node name="Health" type="Node" parent="." unique_id=893059753]
 script = ExtResource("3_gnhdx")
 health = 50
 metadata/_custom_type_script = "uid://dmmwsrob8v0es"
+
+[node name="AttackManager" type="Node3D" parent="." unique_id=405674200]
+script = ExtResource("4_wepyd")
+
+[node name="Attack" parent="AttackManager" unique_id=1363159713 instance=ExtResource("5_5nbuu")]
+attack_name = "Slash"
+cooldown = 2.0

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dmy6pbvxwb63r"]
+
+[ext_resource type="Script" uid="uid://dld7iax2l67il" path="res://entities/player/attacks/attack_base.gd" id="1_tnrbs"]
+[ext_resource type="Script" uid="uid://8h8r6charysq" path="res://entities/player/attacks/attack_area.gd" id="2_rar8f"]
+[ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="3_o4k3t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6l3f"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Attack" type="Node3D" unique_id=1363159713]
+script = ExtResource("1_tnrbs")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=198969603 groups=["Timer"]]
+wait_time = 0.5
+autostart = true
+
+[node name="AttackPivot" type="Node3D" parent="." unique_id=1913494014]
+
+[node name="AttackArea" type="Area3D" parent="AttackPivot" unique_id=202282497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31764287, 0)
+collision_layer = 16
+collision_mask = 256
+script = ExtResource("2_rar8f")
+damage = 1
+
+[node name="AttackCollision" type="CollisionShape3D" parent="AttackPivot/AttackArea" unique_id=1169497884]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_o6l3f")
+disabled = true
+
+[node name="AttackSprite" type="Sprite3D" parent="AttackPivot/AttackArea" unique_id=222871377]
+unique_name_in_owner = true
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+visible = false
+texture = ExtResource("3_o4k3t")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

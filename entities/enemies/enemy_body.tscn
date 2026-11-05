@@ -156,11 +156,20 @@ animations = [{
 radius = 0.076660156
 height = 0.24069214
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6l3f"]
+radius = 0.099609375
+height = 0.29089355
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_o6l3f"]
+viewport_path = NodePath("SubViewport")
+
 [node name="EnemyBody" type="CharacterBody3D" unique_id=996570798 groups=["Enemy"]]
 collision_layer = 4
 collision_mask = 21
 axis_lock_linear_y = true
 script = ExtResource("1_ajstd")
+enemy_damage = 1
+enemy_xp_value = 1
 
 [node name="EnemySprite" type="AnimatedSprite3D" parent="." unique_id=1948147315]
 unique_name_in_owner = true
@@ -177,3 +186,29 @@ shape = SubResource("CapsuleShape3D_b6xf8")
 script = ExtResource("3_mykbo")
 health = 2
 metadata/_custom_type_script = "uid://dmmwsrob8v0es"
+
+[node name="EnemyHurtbox" type="Area3D" parent="." unique_id=1592162980]
+collision_layer = 256
+collision_mask = 16
+
+[node name="EnemyCollisionHurt" type="CollisionShape3D" parent="EnemyHurtbox" unique_id=1111027781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.026428223, 0)
+shape = SubResource("CapsuleShape3D_o6l3f")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2108953240]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(100, 100)
+
+[node name="HealthBar" type="ProgressBar" parent="SubViewport" unique_id=748851936]
+unique_name_in_owner = true
+offset_right = 100.0
+offset_bottom = 27.0
+scale = Vector2(0.5, 0.5)
+max_value = 2.0
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=478945852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25910938, -0.23054472, 0)
+texture = SubResource("ViewportTexture_o6l3f")
+
+[connection signal="area_entered" from="EnemyHurtbox" to="." method="_on_enemy_hurtbox_area_entered"]

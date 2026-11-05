@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var enemy_spawn_timer = %EnemySpawnTimer
 @export var enemy_types : Array [PackedScene] 
+@export var spawn_distance = 10
 
 func _ready():
 	EventsBus.phase_changed.connect(toggle_spawns)
@@ -20,7 +21,6 @@ func toggle_spawns(is_night):
 func spawn_enemy():
 	var player_postion : Vector3 = get_tree().get_first_node_in_group("Player").global_position
 	var spawn_angle = randf_range(0, TAU)
-	var spawn_distance = 10
 	var x_offset = cos(spawn_angle) * spawn_distance
 	var y_offset = sin(spawn_angle) * spawn_distance
 	var spawn_pos : Vector3 = Vector3((player_postion.x + x_offset) , 0 , (player_postion.y + y_offset) )
