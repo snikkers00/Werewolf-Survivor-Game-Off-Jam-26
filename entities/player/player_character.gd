@@ -2,13 +2,24 @@ extends CharacterBody3D
 
 @onready var health: Health = $Health
 @onready var player_sprite : AnimatedSprite3D = %PlayerSprite
+@onready var exp_bar : ProgressBar = %ExpBar
+@onready var level_label : Label = %LevelLabel
+
+var level : int = 1 
+var current_exp : int
+var exp_to_next_level : int
+@export var exp_to_level1 : int
 
 const SPEED = 2.5
 const JUMP_VELOCITY = 4.5
 
 func _ready():
+	exp_to_next_level = exp_to_level1
+	update_exp_ui()
+	
 	health.death.connect(_on_death)
 	EventsBus.phase_changed.connect(shapeshift)
+	EventsBus.xp_gained.connect(gain_exp)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -36,3 +47,22 @@ func shapeshift(is_night):
 		create_tween().tween_property(player_sprite, "modulate", Color.DIM_GRAY, 3)
 	elif is_night == false:
 		create_tween().tween_property(player_sprite, "modulate", Color.WHITE, 3)
+		
+
+func gain_exp(amount):
+	current_exp += amount
+	exp_bar.value += amount
+	if current_exp >= exp_to_next_level:
+		level_up()
+
+func level_up():
+	level += 1
+	current_exp = 0
+	exp_to_next_level = exp_to_level1 * level
+	exp_bar.value = 0
+	update_exp_ui()
+
+func update_exp_ui():
+	exp_bar.value = current_exp
+	exp_bar.max_value = exp_to_next_level
+	level_label.text = "Level: " + str(level)

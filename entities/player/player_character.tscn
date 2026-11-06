@@ -166,6 +166,7 @@ height = 0.24752808
 collision_layer = 2
 collision_mask = 43
 script = ExtResource("1_b5xsv")
+exp_to_level1 = 5
 
 [node name="PlayerCollision" type="CollisionShape3D" parent="." unique_id=2008961977]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14235505, 0)
