@@ -14,6 +14,7 @@ class_name Attack
 
 
 func _on_attack_timer_timeout():
+	sprite.modulate.a = 1.0
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	var closest_enemy = null
 	var shortest_distance = INF
@@ -24,17 +25,26 @@ func _on_attack_timer_timeout():
 			closest_enemy = e
 	
 	if closest_enemy != null:
-		attack_pivot.look_at(closest_enemy.global_position, Vector3.UP)
+		var dir_to_enemy = closest_enemy.global_position - attack_pivot.global_position
+		dir_to_enemy.y = 0
+		var enemy_pos = closest_enemy.global_position
+		enemy_pos.y = attack_pivot.global_position.y
+		attack_pivot.look_at(enemy_pos, Vector3.UP)
 		
 		collision.disabled = false
 		sprite.visible = true
 		
-		await get_tree().create_timer(0.2).timeout
+		var fade = create_tween()
+		fade.tween_property(sprite, "modulate:a", 0.0 , 0.2)
+		await fade.finished
+
 		disable_attack()
 	
 func disable_attack():
+	
 	collision.disabled = true
 	sprite.visible = false
+	
 
 func _ready():
 	EventsBus.upgrade_selected.connect(apply_upgrade)

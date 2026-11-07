@@ -113,10 +113,11 @@ health = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6614411, 0, -4.041055)
 script = ExtResource("3_8qjvd")
 enemy_types = Array[PackedScene]([ExtResource("4_rsju0")])
+spawn_distance = 8
 
 [node name="EnemySpawnTimer" type="Timer" parent="Entities/EnemySpawner" unique_id=179378876]
 unique_name_in_owner = true
-wait_time = 0.5
+wait_time = 0.25
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1752003936]
 layer = 10

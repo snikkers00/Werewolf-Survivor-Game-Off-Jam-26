@@ -210,6 +210,7 @@ metadata/_custom_type_script = "uid://dmmwsrob8v0es"
 script = ExtResource("4_wepyd")
 
 [node name="Attack" parent="AttackManager" unique_id=1363159713 instance=ExtResource("5_5nbuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08583006, 0)
 attack_name = "Slash"
 cooldown = 2.0
 
