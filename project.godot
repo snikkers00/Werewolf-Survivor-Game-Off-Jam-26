@@ -30,6 +30,7 @@ window/stretch/aspect="expand"
 Player=""
 Enemy=""
 Timer=""
+Attack=""
 
 [input]
 
@@ -75,6 +76,7 @@ interact={
 3d_physics/layer_7="AllyHitBox"
 3d_physics/layer_8="EnemyHitBox"
 3d_physics/layer_9="EnemyHurtBox"
+3d_physics/layer_10="AllyHurtBox"
 
 [physics]
 

@@ -4,6 +4,8 @@ extends CharacterBody3D
 @onready var player_sprite : AnimatedSprite3D = %PlayerSprite
 @onready var exp_bar : ProgressBar = %ExpBar
 @onready var level_label : Label = %LevelLabel
+@onready var health_bar : ProgressBar = %PlayerHealthBar
+@onready var death_screen : Panel = %DeathPanel
 
 var level : int = 1 
 var current_exp : int
@@ -15,7 +17,9 @@ const JUMP_VELOCITY = 4.5
 
 func _ready():
 	exp_to_next_level = exp_to_level1
+	health_bar.max_value = health.health
 	update_exp_ui()
+	update_health_ui()
 	
 	health.death.connect(_on_death)
 	EventsBus.phase_changed.connect(shapeshift)
@@ -39,8 +43,12 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+
+
 func _on_death():
-	queue_free()
+	print("Player has died")
+	get_tree().paused = true
+	death_screen.visible = true
 
 func shapeshift(is_night):
 	if is_night == true:
@@ -66,3 +74,12 @@ func update_exp_ui():
 	exp_bar.value = current_exp
 	exp_bar.max_value = exp_to_next_level
 	level_label.text = "Level: " + str(level)
+
+
+func _on_hurt_box_area_entered(area: Area3D) -> void:
+	if area.is_in_group("Attack"):
+		health.damage(area.damage)
+		update_health_ui()
+
+func update_health_ui():
+	health_bar.value = health.health

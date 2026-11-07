@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bv6chpy24lxdo" path="res://world/world_handler.gd" id="1_4pufg"]
 [ext_resource type="PackedScene" uid="uid://duuwtppa4sqgo" path="res://entities/player/player_character.tscn" id="1_6i3v4"]
-[ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://world/ui_control.gd" id="3_5aanf"]
+[ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://ui/ui_control.gd" id="3_5aanf"]
 [ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
 
@@ -36,6 +36,9 @@ radius = 8.006609
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6l3f"]
 font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsju0"]
+bg_color = Color(0.6745098, 0, 0, 1)
 
 [node name="MainWorld" type="Node3D" unique_id=514236664]
 
@@ -186,7 +189,178 @@ grow_horizontal = 2
 text = "Level 1"
 horizontal_alignment = 1
 
+[node name="PlayerHealthBar" type="ProgressBar" parent="UILayer/UIControl" unique_id=2125772951]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 525.0
+offset_top = 566.0
+offset_right = 625.0
+offset_bottom = 593.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_rsju0")
+max_value = 50.0
+step = 1.0
+rounded = true
+show_percentage = false
+
+[node name="LevelUpLayer" type="CanvasLayer" parent="." unique_id=955211817]
+layer = 25
+
+[node name="UpgradeUI" type="Control" parent="LevelUpLayer" unique_id=1225288488]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Upgrades" type="HBoxContainer" parent="LevelUpLayer/UpgradeUI" unique_id=659958748]
+custom_minimum_size = Vector2(600, 600)
+custom_maximum_size = Vector2(600, 600)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeathScreen" type="CanvasLayer" parent="." unique_id=329103570]
+unique_name_in_owner = true
+process_mode = 2
+layer = 50
+
+[node name="DeathPanel" type="Panel" parent="DeathScreen" unique_id=1492868869]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeathLabel" type="Label" parent="DeathScreen/DeathPanel" unique_id=206715062]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -101.0
+offset_right = 43.5
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You Died! :("
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeathScreen/DeathPanel" unique_id=1251077435]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 0
+offset_left = 90.0
+offset_top = 365.0
+offset_right = 690.0
+offset_bottom = 405.0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=107545002]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Restart?"
+
+[node name="MainMenuButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=427750914]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Main Menu?"
+
+[node name="CloseGameButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=1299562945]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Close Game?
+"
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=351953441]
+process_mode = 2
+layer = 100
+
+[node name="PanelPanel" type="Panel" parent="PauseMenu" unique_id=774016345]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseLabel" type="Label" parent="PauseMenu/PanelPanel" unique_id=28937220]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -101.0
+offset_right = 43.5
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You Paused!"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/PanelPanel" unique_id=822497810]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 0
+offset_left = 90.0
+offset_top = 365.0
+offset_right = 690.0
+offset_bottom = 405.0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=336072960]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Restart?"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=845473692]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Main Menu?"
+
+[node name="CloseGameButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=1850932769]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Close Game?
+"
+
 [connection signal="timeout" from="WorldHandler/Day_NightTimer" to="WorldHandler" method="_on_timer_timeout"]
+[connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/RestartButton" to="UILayer/UIControl" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/MainMenuButton" to="UILayer/UIControl" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/CloseGameButton" to="UILayer/UIControl" method="_on_close_game_button_pressed"]
 
 [editable path="Entities/PlayerCharacter"]
 [editable path="Entities/PlayerCharacter/AttackManager/Attack"]

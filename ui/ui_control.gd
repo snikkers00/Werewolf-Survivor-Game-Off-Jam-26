@@ -17,3 +17,16 @@ func _process(_delta):
 		day_night_label.text = "Night"
 	elif  world_handler.is_night == false:
 		day_night_label.text = "Day"
+
+
+func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_main_menu_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_close_game_button_pressed() -> void:
+	get_tree().quit()
