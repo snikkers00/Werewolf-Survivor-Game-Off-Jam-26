@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://dyb0veehkybt1"]
+
+[ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="1_hbemo"]
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_j338p"]
+
+[resource]
+script = ExtResource("1_j338p")
+name = "Harder Claws"
+description = "Increase Claw Damage:"
+stat_modified = 1
+stat_modifier = 1.0
+icon = ExtResource("1_hbemo")
+metadata/_custom_type_script = "uid://diqhnlttuvp4x"

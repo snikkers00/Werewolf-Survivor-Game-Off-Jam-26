@@ -17,6 +17,7 @@ autostart = true
 [node name="AttackPivot" type="Node3D" parent="." unique_id=1913494014]
 
 [node name="AttackArea" type="Area3D" parent="AttackPivot" unique_id=202282497]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31764287, 0)
 collision_layer = 16
 collision_mask = 256

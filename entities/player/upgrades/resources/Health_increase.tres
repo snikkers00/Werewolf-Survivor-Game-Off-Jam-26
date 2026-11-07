@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://bm4orx4j6bet3"]
+
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_drqch"]
+
+[resource]
+script = ExtResource("1_drqch")
+name = "Denser Muscles"
+description = "Increase Health:"
+stat_modifier = 1.1
+metadata/_custom_type_script = "uid://diqhnlttuvp4x"

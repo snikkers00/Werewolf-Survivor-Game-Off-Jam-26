@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://ddg5kbjtn2s5d"]
+
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_0ykgo"]
+[ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="1_v3u74"]
+
+[resource]
+script = ExtResource("1_0ykgo")
+name = "Streamlined Claws"
+description = "Increase Claw attack speed:"
+stat_modified = 2
+stat_modifier = 0.5
+icon = ExtResource("1_v3u74")
+metadata/_custom_type_script = "uid://diqhnlttuvp4x"

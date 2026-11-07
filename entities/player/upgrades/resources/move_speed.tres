@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://dhmidccp00ikq"]
+
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_yw88p"]
+
+[resource]
+script = ExtResource("1_yw88p")
+name = "Lighter Feet"
+description = "Increase Move Speed:"
+stat_modified = 3
+stat_modifier = 1.1
+metadata/_custom_type_script = "uid://diqhnlttuvp4x"

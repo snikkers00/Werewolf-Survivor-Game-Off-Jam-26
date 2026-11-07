@@ -5,6 +5,13 @@
 [ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://ui/ui_control.gd" id="3_5aanf"]
 [ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
+[ext_resource type="Script" uid="uid://dn5ohw70i34cm" path="res://world/upgrade_ui.gd" id="6_2ccdf"]
+[ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="6_w2sia"]
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="7_njfbw"]
+[ext_resource type="Resource" uid="uid://dyb0veehkybt1" path="res://entities/player/upgrades/resources/claw_damage_increase.tres" id="8_xguvr"]
+[ext_resource type="Resource" uid="uid://dhmidccp00ikq" path="res://entities/player/upgrades/resources/move_speed.tres" id="9_o0hhk"]
+[ext_resource type="Resource" uid="uid://ddg5kbjtn2s5d" path="res://entities/player/upgrades/resources/claw_attack_speed.tres" id="10_2bho7"]
+[ext_resource type="Resource" uid="uid://bm4orx4j6bet3" path="res://entities/player/upgrades/resources/Health_increase.tres" id="11_ootrp"]
 
 [sub_resource type="Environment" id="Environment_6i3v4"]
 background_mode = 1
@@ -84,7 +91,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_o6l3f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HomeBae" unique_id=576905168]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4546661, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.4754786, 0)
 mesh = SubResource("TorusMesh_6i3v4")
 
 [node name="InteractionArea" type="Area3D" parent="HomeBae" unique_id=317824548]
@@ -98,6 +105,9 @@ shape = SubResource("SphereShape3D_o6l3f")
 
 [node name="PlayerCharacter" parent="Entities" unique_id=1825023238 instance=ExtResource("1_6i3v4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.879191, 0.01768972, 0)
+
+[node name="Health" parent="Entities/PlayerCharacter" index="4" unique_id=893059753]
+health = 25
 
 [node name="EnemySpawner" type="Node3D" parent="Entities" unique_id=1442707549]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6614411, 0, -4.041055)
@@ -206,6 +216,9 @@ show_percentage = false
 layer = 25
 
 [node name="UpgradeUI" type="Control" parent="LevelUpLayer" unique_id=1225288488]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -218,22 +231,145 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("6_2ccdf")
+all_upgrades = Array[ExtResource("7_njfbw")]([ExtResource("8_xguvr"), ExtResource("9_o0hhk"), ExtResource("10_2bho7"), ExtResource("11_ootrp")])
 
 [node name="Upgrades" type="HBoxContainer" parent="LevelUpLayer/UpgradeUI" unique_id=659958748]
-custom_minimum_size = Vector2(600, 600)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 200)
 custom_maximum_size = Vector2(600, 600)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -300.0
-offset_right = 300.0
-offset_bottom = 300.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="UpgradeButton1" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=348569688]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1" unique_id=237324426]
+custom_minimum_size = Vector2(200, 200)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=1933737100]
+modulate = Color(1, 1, 1, 0.19607843)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_w2sia")
+
+[node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=1070929837]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Harder Claws"
+horizontal_alignment = 1
+
+[node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=152727140]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+text = "Claws Damage Increase: "
+fit_content = true
+horizontal_alignment = 1
+
+[node name="UpgradeButton2" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=67209969]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2" unique_id=1129158769]
+custom_minimum_size = Vector2(200, 200)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=379164725]
+modulate = Color(1, 1, 1, 0.19607843)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_w2sia")
+
+[node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=1520722820]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Harder Claws"
+horizontal_alignment = 1
+
+[node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=1009498475]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+text = "Claws Damage Increase: "
+fit_content = true
+horizontal_alignment = 1
+
+[node name="UpgradeButton3" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=1217316261]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3" unique_id=680399816]
+custom_minimum_size = Vector2(200, 200)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1807100951]
+modulate = Color(1, 1, 1, 0.19607843)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_w2sia")
+
+[node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1774338394]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Harder Claws"
+horizontal_alignment = 1
+
+[node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1129358151]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+text = "Claws Damage Increase: "
+fit_content = true
+horizontal_alignment = 1
 
 [node name="DeathScreen" type="CanvasLayer" parent="." unique_id=329103570]
 unique_name_in_owner = true
@@ -302,6 +438,7 @@ process_mode = 2
 layer = 100
 
 [node name="PanelPanel" type="Panel" parent="PauseMenu" unique_id=774016345]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -358,6 +495,9 @@ text = "Close Game?
 "
 
 [connection signal="timeout" from="WorldHandler/Day_NightTimer" to="WorldHandler" method="_on_timer_timeout"]
+[connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_1_pressed"]
+[connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_2_pressed"]
+[connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_3_pressed"]
 [connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/RestartButton" to="UILayer/UIControl" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/MainMenuButton" to="UILayer/UIControl" method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/CloseGameButton" to="UILayer/UIControl" method="_on_close_game_button_pressed"]

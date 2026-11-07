@@ -8,6 +8,10 @@ class_name Attack
 
 @onready var collision = %AttackCollision
 @onready var sprite = %AttackSprite
+@onready var attack_timer = %AttackTimer
+@onready var attack_area = %AttackArea
+
+
 
 func _on_attack_timer_timeout():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
@@ -31,3 +35,10 @@ func _on_attack_timer_timeout():
 func disable_attack():
 	collision.disabled = true
 	sprite.visible = false
+
+func _ready():
+	EventsBus.upgrade_selected.connect(apply_upgrade)
+
+func apply_upgrade(upgrade : Upgrade):
+	if upgrade.stat_modified == Upgrade.StatModified.DAMAGE:
+		attack_area.damage += int(upgrade.stat_modifier)

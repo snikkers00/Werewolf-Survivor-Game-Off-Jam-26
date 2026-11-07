@@ -5,7 +5,9 @@ extends CharacterBody3D
 @onready var exp_bar : ProgressBar = %ExpBar
 @onready var level_label : Label = %LevelLabel
 @onready var health_bar : ProgressBar = %PlayerHealthBar
+
 @onready var death_screen : Panel = %DeathPanel
+@onready var upgrade_screen : Control = %UpgradeUI
 
 var level : int = 1 
 var current_exp : int
@@ -60,15 +62,20 @@ func shapeshift(is_night):
 func gain_exp(amount):
 	current_exp += amount
 	exp_bar.value += amount
-	if current_exp >= exp_to_next_level:
-		level_up()
+	while current_exp >= exp_to_next_level:
+		if get_tree().paused == false:
+			level_up()
 
 func level_up():
 	level += 1
-	current_exp = 0
-	exp_to_next_level = exp_to_level1 * level
+	current_exp -= exp_to_next_level
+	exp_to_next_level = exp_to_level1 * (level + .3)
 	exp_bar.value = 0
 	update_exp_ui()
+	get_tree().paused = true
+	upgrade_screen.check_and_update_upgrades()
+	upgrade_screen.visible = true
+
 
 func update_exp_ui():
 	exp_bar.value = current_exp
