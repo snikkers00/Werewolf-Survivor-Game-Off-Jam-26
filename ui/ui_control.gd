@@ -25,7 +25,7 @@ func _on_restart_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://ui/title_screen.tscn")
 
 
 func _on_close_game_button_pressed() -> void:

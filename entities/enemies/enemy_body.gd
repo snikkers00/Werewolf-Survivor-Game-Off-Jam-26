@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @onready var health_bar = %HealthBar
 
-const SPEED = 2
+@export var SPEED = 1
 @onready var enemysprite : AnimatedSprite3D = %EnemySprite
 @export var enemy_damage : int
 @export var enemy_xp_value : int

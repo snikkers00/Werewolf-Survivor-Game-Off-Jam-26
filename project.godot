@@ -10,15 +10,18 @@ config_version=5
 
 [application]
 
-config/name="Game Off 2026"
+config/name="Werewolf Survivor"
+config/description="Gather and research during the day, defend yourself by night."
+config/version="0.1.7"
 run/main_scene="uid://b4hokgkltdlyf"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bsmyj3vdewi13"
 
 [autoload]
 
 RunState="*uid://dtddkg081xa1a"
 EventsBus="*uid://bq7mrlsy3sbl7"
+Resources="*uid://bplfkhpnhx0mx"
 
 [display]
 

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_yw88p")
 name = "Lighter Feet"
-description = "Increase Move Speed:"
+description = "Increase Move Speed"
 stat_modified = 3
 stat_modifier = 1.1
 metadata/_custom_type_script = "uid://diqhnlttuvp4x"

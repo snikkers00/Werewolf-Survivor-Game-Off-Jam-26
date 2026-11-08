@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://cpwar8na6vsh5"]
+
+[ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_k4bsp"]
+
+[resource]
+script = ExtResource("1_k4bsp")
+name = "Faster Learning"
+description = "Gain more Knowledge"
+stat_modified = 5
+stat_modifier = 1.05
+metadata/_custom_type_script = "uid://diqhnlttuvp4x"

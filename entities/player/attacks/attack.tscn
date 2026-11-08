@@ -9,8 +9,11 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Attack" type="Node3D" unique_id=1363159713]
 script = ExtResource("1_tnrbs")
+cooldown = 1.0
+damage = 1
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=198969603 groups=["Timer"]]
+unique_name_in_owner = true
 wait_time = 0.5
 autostart = true
 

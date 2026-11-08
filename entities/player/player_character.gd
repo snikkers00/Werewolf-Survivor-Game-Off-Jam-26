@@ -5,27 +5,30 @@ extends CharacterBody3D
 @onready var exp_bar : ProgressBar = %ExpBar
 @onready var level_label : Label = %LevelLabel
 @onready var health_bar : ProgressBar = %PlayerHealthBar
+@onready var health_label : Label = %HealthLabel
 
 @onready var death_screen : Panel = %DeathPanel
 @onready var upgrade_screen : Control = %UpgradeUI
 
+var exp_rate : float = 1.0
 var level : int = 1 
 var current_exp : int
 var exp_to_next_level : int
 @export var exp_to_level1 : int
 
-const SPEED = 2.5
-const JUMP_VELOCITY = 4.5
+@export var SPEED = 2.5
+
 
 func _ready():
 	exp_to_next_level = exp_to_level1
-	health_bar.max_value = health.health
+	health_bar.max_value = health.max_health
 	update_exp_ui()
 	update_health_ui()
 	
 	health.death.connect(_on_death)
 	EventsBus.phase_changed.connect(shapeshift)
 	EventsBus.xp_gained.connect(gain_exp)
+	EventsBus.upgrade_selected.connect(apply_player_upgrade)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -60,8 +63,8 @@ func shapeshift(is_night):
 		
 
 func gain_exp(amount):
-	current_exp += amount
-	exp_bar.value += amount
+	current_exp += amount * exp_rate
+	exp_bar.value += amount * exp_rate
 	while current_exp >= exp_to_next_level:
 		if get_tree().paused == false:
 			level_up()
@@ -70,7 +73,6 @@ func level_up():
 	level += 1
 	current_exp -= exp_to_next_level
 	exp_to_next_level = exp_to_level1 * (level + .3)
-	exp_bar.value = 0
 	update_exp_ui()
 	get_tree().paused = true
 	upgrade_screen.check_and_update_upgrades()
@@ -90,3 +92,17 @@ func _on_hurt_box_area_entered(area: Area3D) -> void:
 
 func update_health_ui():
 	health_bar.value = health.health
+	health_bar.max_value = health.max_health
+	health_label.text = str(health.health) + "/" + str(health.max_health)
+
+
+func apply_player_upgrade(upgrade : Upgrade):
+	if upgrade.stat_modified == Upgrade.StatModified.HEALTH:
+		
+		health.max_health *= upgrade.stat_modifier
+		health.health *= upgrade.stat_modifier
+		update_health_ui()
+	if upgrade.stat_modified == Upgrade.StatModified.XP_GAIN:
+		exp_rate *= upgrade.stat_modifier
+	if upgrade.stat_modified == Upgrade.StatModified.MOVEMENT_SPEED:
+		SPEED *= upgrade.stat_modifier

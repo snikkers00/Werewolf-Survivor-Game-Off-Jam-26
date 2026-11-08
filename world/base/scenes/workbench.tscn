@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://i0c5hmcu21i2"]
+
+[ext_resource type="PackedScene" uid="uid://bw72rxetfruim" path="res://world/base/models/workbench.fbx" id="1_mcwoh"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r46ga"]
+points = PackedVector3Array(-0.15014604, 0.1946972, -0.12666, 0.1454474, 0.23318446, 0.122669764, 0.122683086, 0.2331948, 0.14543417, 0.12881067, -1.3877788e-17, 0.12878399, 0.12665789, 0.1946972, -0.15014604, -0.12881297, -1.3877788e-17, 0.12878399, -0.12881297, -1.3877788e-17, -0.12878399, -0.1454237, 0.23318642, 0.122676305, 0.12881067, -1.3877788e-17, -0.12878399, -0.122676775, 0.23318668, -0.14542396, 0.1454474, 0.23318446, -0.122669764, -0.12666018, 0.1946972, 0.15014604, 0.15014374, 0.19472063, -0.1266306, -0.12666018, 0.1946972, -0.15014604, -0.15014604, 0.1946972, 0.12666, 0.12665789, 0.1946972, 0.15014604, 0.15014374, 0.19472063, 0.1266306, -0.14543307, 0.23319389, -0.12268421, 0.122683086, 0.2331948, -0.14543417, -0.12267643, 0.23318635, 0.14542356)
+
+[node name="workbench" unique_id=1086082835 instance=ExtResource("1_mcwoh")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=1572837070]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=1002730232]
+shape = SubResource("ConvexPolygonShape3D_r46ga")

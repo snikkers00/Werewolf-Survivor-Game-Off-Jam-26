@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_j338p")
 name = "Harder Claws"
-description = "Increase Claw Damage:"
+description = "Increase Claw Damage"
 stat_modified = 1
 stat_modifier = 1.0
 icon = ExtResource("1_hbemo")
