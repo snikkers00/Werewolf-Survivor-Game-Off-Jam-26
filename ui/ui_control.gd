@@ -9,6 +9,8 @@ extends Control
 func _ready():
 	world_progress.max_value = world_timer.wait_time
 	day_night_label.text = "Day"
+	Resources.wood_label = %WoodLabel
+	Resources.stone_label = %StoneLabel
 
 func _process(_delta):
 	world_progress.value = int(world_timer.time_left)

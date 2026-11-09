@@ -1,18 +1,23 @@
 [gd_scene format=3 uid="uid://b2kkfqg3envr6"]
 
-[ext_resource type="Script" uid="uid://dc2p4s1l5hke8" path="res://world/gathering_spot.gd" id="1_vfooo"]
+[ext_resource type="Script" uid="uid://dc2p4s1l5hke8" path="res://entities/interactable/gathering_spot.gd" id="1_vm6r0"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_o6l3f"]
 height = 1.4816895
 radius = 0.7475586
 
 [node name="GatheringSpot" type="Area3D" unique_id=1203632320]
-script = ExtResource("1_vfooo")
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_vm6r0")
 
 [node name="GatheringArea" type="CollisionShape3D" parent="." unique_id=2127356124]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6485596, 0)
 shape = SubResource("CylinderShape3D_o6l3f")
 
 [node name="GatheringTimer" type="Timer" parent="." unique_id=597320678]
+unique_name_in_owner = true
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="GatheringTimer" to="." method="_on_gathering_timer_timeout"]

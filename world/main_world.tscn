@@ -18,7 +18,9 @@
 [ext_resource type="Resource" uid="uid://ddg5kbjtn2s5d" path="res://entities/player/upgrades/resources/claw_attack_speed.tres" id="10_2bho7"]
 [ext_resource type="Resource" uid="uid://bm4orx4j6bet3" path="res://entities/player/upgrades/resources/Health_increase.tres" id="11_ootrp"]
 [ext_resource type="Resource" uid="uid://cpwar8na6vsh5" path="res://entities/player/upgrades/resources/exp_gain.tres" id="12_ootrp"]
+[ext_resource type="Texture2D" uid="uid://d3b4r2we1blmw" path="res://world/base/images/tree-log.png" id="13_v1kbc"]
 [ext_resource type="Resource" uid="uid://ua35a8eyqrvs" path="res://entities/player/upgrades/resources/resource_gain.tres" id="13_yae5m"]
+[ext_resource type="Texture2D" uid="uid://cdtytolrkt50l" path="res://world/base/images/rock-b.png" id="14_c45uy"]
 [ext_resource type="PackedScene" uid="uid://baeqqk1oaggn0" path="res://world/base/scenes/bedroll.tscn" id="15_yae5m"]
 [ext_resource type="PackedScene" uid="uid://bbne58nq5bcvs" path="res://world/base/scenes/tree.tscn" id="17_4g0kw"]
 
@@ -142,6 +144,7 @@ wait_time = 0.25
 layer = 10
 
 [node name="UIControl" type="Control" parent="UILayer" unique_id=1884960614]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -244,6 +247,33 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "10/10"
 horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer" unique_id=879850418]
+offset_left = 50.0
+offset_top = 29.0
+offset_right = 247.0
+offset_bottom = 93.0
+
+[node name="ResourceBox" type="BoxContainer" parent="UILayer/PanelContainer" unique_id=415553848]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UILayer/PanelContainer/ResourceBox" unique_id=1795673319]
+layout_mode = 2
+texture = ExtResource("13_v1kbc")
+
+[node name="WoodLabel" type="Label" parent="UILayer/PanelContainer/ResourceBox" unique_id=1227467959]
+unique_name_in_owner = true
+layout_mode = 2
+text = ": 0"
+
+[node name="TextureRect2" type="TextureRect" parent="UILayer/PanelContainer/ResourceBox" unique_id=1511728282]
+layout_mode = 2
+texture = ExtResource("14_c45uy")
+
+[node name="StoneLabel" type="Label" parent="UILayer/PanelContainer/ResourceBox" unique_id=1366112990]
+unique_name_in_owner = true
+layout_mode = 2
+text = ": 0"
 
 [node name="LevelUpLayer" type="CanvasLayer" parent="." unique_id=955211817]
 layer = 25
