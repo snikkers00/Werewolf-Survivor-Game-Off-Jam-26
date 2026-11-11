@@ -27,3 +27,26 @@ func gain_resource(resource_type : ResourceType, amount : int) -> void:
 func update_resource_ui() -> void:
 	wood_label.text = ": " + str(current_wood)
 	stone_label.text = ": " + str(current_stone)
+
+
+func check_spend_resource_success(resource_type : ResourceType, amount : int) -> bool:
+	if resource_type == ResourceType.WOOD:
+		if current_wood >= amount:
+			current_wood -= amount
+			update_resource_ui()
+			return true
+		else:
+			print("Not enough wood")
+			return false
+			
+	elif resource_type == ResourceType.STONE:
+		if current_stone >= amount:
+			current_stone -= amount
+			update_resource_ui()
+			return true
+		else:
+			print("Not enough stone")
+			return false
+	else:
+		print("Invalid resource types submitted")
+		return false

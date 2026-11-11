@@ -6,7 +6,9 @@
 [ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://ui/ui_control.gd" id="3_5aanf"]
 [ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
 [ext_resource type="PackedScene" uid="uid://c8qh1wfiplojh" path="res://world/base/scenes/rock_b.tscn" id="3_t6m8u"]
+[ext_resource type="PackedScene" uid="uid://de4m6m70ttarv" path="res://entities/interactable/upgradable_structure.tscn" id="3_tlxoi"]
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
+[ext_resource type="Script" uid="uid://bs0cktatuwid4" path="res://entities/interactable/base_structure.gd" id="4_tlxoi"]
 [ext_resource type="PackedScene" uid="uid://bbapqscncpey8" path="res://world/base/scenes/campfire_pit.tscn" id="5_onsxo"]
 [ext_resource type="Script" uid="uid://dn5ohw70i34cm" path="res://ui/upgrade_ui.gd" id="6_2ccdf"]
 [ext_resource type="PackedScene" uid="uid://bv2u4u0rexw38" path="res://world/base/scenes/campfire_stand.tscn" id="6_ru5wi"]
@@ -21,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://d3b4r2we1blmw" path="res://world/base/images/tree-log.png" id="13_v1kbc"]
 [ext_resource type="Resource" uid="uid://ua35a8eyqrvs" path="res://entities/player/upgrades/resources/resource_gain.tres" id="13_yae5m"]
 [ext_resource type="Texture2D" uid="uid://cdtytolrkt50l" path="res://world/base/images/rock-b.png" id="14_c45uy"]
-[ext_resource type="PackedScene" uid="uid://baeqqk1oaggn0" path="res://world/base/scenes/bedroll.tscn" id="15_yae5m"]
 [ext_resource type="PackedScene" uid="uid://bbne58nq5bcvs" path="res://world/base/scenes/tree.tscn" id="17_4g0kw"]
 
 [sub_resource type="Environment" id="Environment_6i3v4"]
@@ -36,13 +37,6 @@ background_color = Color(0.99243873, 0.7950196, 0.8058209, 1)
 size = Vector2(100, 100)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uk7ad"]
-
-[sub_resource type="TorusMesh" id="TorusMesh_6i3v4"]
-outer_radius = 4.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_mcwoh"]
-height = 2.6865234
-radius = 2.4716797
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6l3f"]
 font_size = 30
@@ -70,7 +64,7 @@ shadow_opacity = 0.9
 
 [node name="Day_NightTimer" type="Timer" parent="WorldHandler" unique_id=1882201535]
 unique_name_in_owner = true
-wait_time = 10.0
+wait_time = 20.0
 autostart = true
 
 [node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
@@ -82,46 +76,33 @@ surface_material_override/0 = ExtResource("2_2njat")
 [node name="WorldCollision" type="CollisionShape3D" parent="WorldGround" unique_id=1549030858]
 shape = SubResource("WorldBoundaryShape3D_uk7ad")
 
-[node name="HomeBae" type="Node3D" parent="." unique_id=1859075692]
+[node name="HomeBase" type="Node3D" parent="." unique_id=1859075692]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HomeBae" unique_id=576905168]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.73, 0)
-mesh = SubResource("TorusMesh_6i3v4")
-surface_material_override/0 = ExtResource("2_2njat")
+[node name="BaseUpgradableStructure" parent="HomeBase" unique_id=311782980 instance=ExtResource("3_tlxoi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4107324, 0, -0.4907533)
+script = ExtResource("4_tlxoi")
+base_exp_tick_rate = 1.0
 
-[node name="InteractionArea" type="Area3D" parent="HomeBae" unique_id=317824548]
-collision_layer = 8
-collision_mask = 2
-
-[node name="ResearchArea" type="CollisionShape3D" parent="HomeBae/InteractionArea" unique_id=341682418]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34326172, 0)
-shape = SubResource("CylinderShape3D_mcwoh")
-
-[node name="Timer" type="Timer" parent="HomeBae/InteractionArea/ResearchArea" unique_id=193763423]
-
-[node name="bedroll" parent="HomeBae" unique_id=1639390953 instance=ExtResource("15_yae5m")]
-transform = Transform3D(0.6915856, 0, -0.7222945, 0, 1, 0, 0.7222945, 0, 0.6915856, -0.4385624, 0.055159997, -0.43341398)
-
-[node name="rock-b" parent="HomeBae" unique_id=808174205 instance=ExtResource("3_t6m8u")]
+[node name="rock-b" parent="HomeBase" unique_id=808174205 instance=ExtResource("3_t6m8u")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9259194, 0, -1.4408872)
 
-[node name="tree" parent="HomeBae" unique_id=1137582415 instance=ExtResource("17_4g0kw")]
+[node name="tree" parent="HomeBase" unique_id=1137582415 instance=ExtResource("17_4g0kw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8928874, 0, -1.0135117)
 
-[node name="campfire-pit" parent="HomeBae" unique_id=974558792 instance=ExtResource("5_onsxo")]
+[node name="campfire-pit" parent="HomeBase" unique_id=974558792 instance=ExtResource("5_onsxo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5574217, 0, 0.5944712)
 
-[node name="campfire-stand" parent="HomeBae" unique_id=766697778 instance=ExtResource("6_ru5wi")]
+[node name="campfire-stand" parent="HomeBase" unique_id=766697778 instance=ExtResource("6_ru5wi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5574217, 0, 0.5944712)
 
-[node name="workbench" parent="HomeBae" unique_id=1086082835 instance=ExtResource("7_ru5wi")]
+[node name="workbench" parent="HomeBase" unique_id=1086082835 instance=ExtResource("7_ru5wi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79733324, 0, 0.8249358)
 
 [node name="Entities" type="Node3D" parent="." unique_id=1342972052]
 
 [node name="PlayerCharacter" parent="Entities" unique_id=1825023238 instance=ExtResource("1_6i3v4")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.040420532, 0.01768972, 0)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [node name="Health" parent="Entities/PlayerCharacter" index="4" unique_id=893059753]
 max_health = 25

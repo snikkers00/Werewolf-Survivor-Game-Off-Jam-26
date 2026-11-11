@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://de4m6m70ttarv"]
+
+[ext_resource type="Script" uid="uid://c1nrjru8hmygi" path="res://entities/interactable/upgradable_structure.gd" id="1_sjn0o"]
+[ext_resource type="PackedScene" uid="uid://baeqqk1oaggn0" path="res://world/base/scenes/bedroll.tscn" id="2_8h5rm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mcwoh"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uk7ad"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.039215688)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o6l3f"]
+material = SubResource("StandardMaterial3D_uk7ad")
+radius = 1.0
+is_hemisphere = true
+
+[node name="UpgradableStructure" type="Node3D" unique_id=311782980]
+script = ExtResource("1_sjn0o")
+structure_name = "Base"
+cost_type = 2
+starting_level = 1
+current_level = 1
+upgrade_cost_wood = 2
+upgrade_cost_stone = 2
+
+[node name="ActivationArea" type="Area3D" parent="." unique_id=23553612]
+collision_layer = 8
+collision_mask = 2
+
+[node name="ResearchCollision" type="CollisionShape3D" parent="ActivationArea" unique_id=785179818]
+shape = SubResource("CylinderShape3D_mcwoh")
+
+[node name="Timer" type="Timer" parent="ActivationArea/ResearchCollision" unique_id=1273910468]
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=222908699]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 2
+
+[node name="InteractionCollision" type="CollisionShape3D" parent="InteractionArea" unique_id=1049156259]
+shape = SubResource("CylinderShape3D_mcwoh")
+
+[node name="InteractionVisual" type="MeshInstance3D" parent="InteractionArea" unique_id=324995240]
+mesh = SubResource("SphereMesh_o6l3f")
+
+[node name="StructureLabel3D" type="Label3D" parent="." unique_id=1474910970]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8269195, 0)
+visible = false
+text = "Base Upgrade
+Cost: 2 Wood, 2 Stone"
+
+[node name="bedroll" parent="." unique_id=1639390953 groups=["StructureModel"] instance=ExtResource("2_8h5rm")]
+transform = Transform3D(0.72895324, 0, -0.6845635, 0, 1, 0, 0.6845635, 0, 0.72895324, 0, 0, 0)
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
