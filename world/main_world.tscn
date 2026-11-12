@@ -10,16 +10,17 @@
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
 [ext_resource type="Script" uid="uid://bs0cktatuwid4" path="res://entities/interactable/base_structure.gd" id="4_tlxoi"]
 [ext_resource type="PackedScene" uid="uid://bbapqscncpey8" path="res://world/base/scenes/campfire_pit.tscn" id="5_onsxo"]
+[ext_resource type="PackedScene" uid="uid://baeqqk1oaggn0" path="res://world/base/scenes/bedroll.tscn" id="5_q1dqp"]
 [ext_resource type="Script" uid="uid://dn5ohw70i34cm" path="res://ui/upgrade_ui.gd" id="6_2ccdf"]
-[ext_resource type="PackedScene" uid="uid://bv2u4u0rexw38" path="res://world/base/scenes/campfire_stand.tscn" id="6_ru5wi"]
+[ext_resource type="Script" uid="uid://puk0yi0s61u5" path="res://entities/interactable/healing_station.gd" id="6_r47v5"]
 [ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="6_w2sia"]
 [ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="7_njfbw"]
-[ext_resource type="PackedScene" uid="uid://i0c5hmcu21i2" path="res://world/base/scenes/workbench.tscn" id="7_ru5wi"]
 [ext_resource type="Resource" uid="uid://dyb0veehkybt1" path="res://entities/player/upgrades/resources/claw_damage_increase.tres" id="8_xguvr"]
 [ext_resource type="Resource" uid="uid://dhmidccp00ikq" path="res://entities/player/upgrades/resources/move_speed.tres" id="9_o0hhk"]
 [ext_resource type="Resource" uid="uid://ddg5kbjtn2s5d" path="res://entities/player/upgrades/resources/claw_attack_speed.tres" id="10_2bho7"]
 [ext_resource type="Resource" uid="uid://bm4orx4j6bet3" path="res://entities/player/upgrades/resources/Health_increase.tres" id="11_ootrp"]
 [ext_resource type="Resource" uid="uid://cpwar8na6vsh5" path="res://entities/player/upgrades/resources/exp_gain.tres" id="12_ootrp"]
+[ext_resource type="PackedScene" uid="uid://ds8go3du3bsgp" path="res://entities/enemies/boss_character.tscn" id="13_q1dqp"]
 [ext_resource type="Texture2D" uid="uid://d3b4r2we1blmw" path="res://world/base/images/tree-log.png" id="13_v1kbc"]
 [ext_resource type="Resource" uid="uid://ua35a8eyqrvs" path="res://entities/player/upgrades/resources/resource_gain.tres" id="13_yae5m"]
 [ext_resource type="Texture2D" uid="uid://cdtytolrkt50l" path="res://world/base/images/rock-b.png" id="14_c45uy"]
@@ -38,6 +39,12 @@ size = Vector2(100, 100)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uk7ad"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tlxoi"]
+resource_local_to_scene = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q1dqp"]
+resource_local_to_scene = true
+
 [sub_resource type="LabelSettings" id="LabelSettings_o6l3f"]
 font_size = 30
 
@@ -49,6 +56,8 @@ bg_color = Color(0.6745098, 0, 0, 1)
 [node name="WorldHandler" type="Node3D" parent="." unique_id=1527563304]
 unique_name_in_owner = true
 script = ExtResource("1_4pufg")
+day_length = 2.0
+night_length = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="WorldHandler" unique_id=1387091601]
 environment = SubResource("Environment_6i3v4")
@@ -64,8 +73,7 @@ shadow_opacity = 0.9
 
 [node name="Day_NightTimer" type="Timer" parent="WorldHandler" unique_id=1882201535]
 unique_name_in_owner = true
-wait_time = 20.0
-autostart = true
+one_shot = true
 
 [node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
 
@@ -78,26 +86,33 @@ shape = SubResource("WorldBoundaryShape3D_uk7ad")
 
 [node name="HomeBase" type="Node3D" parent="." unique_id=1859075692]
 
-[node name="BaseUpgradableStructure" parent="HomeBase" unique_id=311782980 instance=ExtResource("3_tlxoi")]
+[node name="Base" parent="HomeBase" unique_id=311782980 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4107324, 0, -0.4907533)
 script = ExtResource("4_tlxoi")
 base_exp_tick_rate = 1.0
+structure_model_scene = ExtResource("5_q1dqp")
+
+[node name="InteractionCollision" parent="HomeBase/Base/InteractionArea" parent_id_path=PackedInt32Array(311782980, 23553612) index="0" unique_id=785179818]
+shape = SubResource("CylinderShape3D_tlxoi")
+
+[node name="HealingStation" parent="HomeBase" unique_id=2064620942 instance=ExtResource("3_tlxoi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8236377, 0, 0.7244967)
+script = ExtResource("6_r47v5")
+structure_name = "Healing Station"
+structure_model_scene = ExtResource("5_onsxo")
+cost_type = 0
+starting_level = 0
+current_level = 0
+upgrade_cost_stone = 0
+
+[node name="InteractionCollision" parent="HomeBase/HealingStation/InteractionArea" parent_id_path=PackedInt32Array(2064620942, 23553612) index="0" unique_id=785179818]
+shape = SubResource("CylinderShape3D_q1dqp")
 
 [node name="rock-b" parent="HomeBase" unique_id=808174205 instance=ExtResource("3_t6m8u")]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9259194, 0, -1.4408872)
 
 [node name="tree" parent="HomeBase" unique_id=1137582415 instance=ExtResource("17_4g0kw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8928874, 0, -1.0135117)
-
-[node name="campfire-pit" parent="HomeBase" unique_id=974558792 instance=ExtResource("5_onsxo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5574217, 0, 0.5944712)
-
-[node name="campfire-stand" parent="HomeBase" unique_id=766697778 instance=ExtResource("6_ru5wi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5574217, 0, 0.5944712)
-
-[node name="workbench" parent="HomeBase" unique_id=1086082835 instance=ExtResource("7_ru5wi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79733324, 0, 0.8249358)
 
 [node name="Entities" type="Node3D" parent="." unique_id=1342972052]
 
@@ -106,20 +121,24 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 
 [node name="Health" parent="Entities/PlayerCharacter" index="4" unique_id=893059753]
 max_health = 25
-health = 25
+health = 10
 
 [node name="Slash" parent="Entities/PlayerCharacter/AttackManager" parent_id_path=PackedInt32Array(1825023238, 405674200) index="0" unique_id=1363159713]
 attack_name = ""
 
 [node name="EnemySpawner" type="Node3D" parent="Entities" unique_id=1442707549]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6614411, 0, -4.041055)
 script = ExtResource("3_8qjvd")
 enemy_types = Array[PackedScene]([ExtResource("4_rsju0")])
 spawn_distance = 8
+boss_scene = ExtResource("13_q1dqp")
 
 [node name="EnemySpawnTimer" type="Timer" parent="Entities/EnemySpawner" unique_id=179378876]
 unique_name_in_owner = true
 wait_time = 0.25
+
+[node name="BossSpawnMarker" type="Marker3D" parent="Entities/EnemySpawner" unique_id=711483073]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04113853, 0.7067225, -6.953488)
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1752003936]
 layer = 10
@@ -228,6 +247,23 @@ offset_bottom = 23.0
 grow_horizontal = 2
 text = "10/10"
 horizontal_alignment = 1
+
+[node name="LivesLabel" type="Label" parent="UILayer/UIControl/PlayerHealthBar" unique_id=1043639378]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -52.0
+offset_right = 100.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="UILayer" unique_id=879850418]
 offset_left = 50.0
@@ -443,21 +479,29 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -43.5
-offset_top = -101.0
+offset_top = -162.0
 offset_right = 43.5
-offset_bottom = -78.0
+offset_bottom = -139.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 32
 text = "You Died! :("
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DeathScreen/DeathPanel" unique_id=1251077435]
 custom_minimum_size = Vector2(600, 40)
-layout_mode = 0
-offset_left = 90.0
-offset_top = 365.0
-offset_right = 690.0
-offset_bottom = 405.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = 109.0
+offset_right = 300.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
 
@@ -476,6 +520,27 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Close Game?
 "
+
+[node name="StatsLabel" type="RichTextLabel" parent="DeathScreen/DeathPanel" unique_id=1198153227]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -150.0
+offset_right = 100.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Days Lasted: 0
+Resources Gathered : 0
+Knowledge Gained: 0
+Enemies Killed : 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=351953441]
 process_mode = 2
@@ -546,4 +611,6 @@ text = "Close Game?
 [connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/MainMenuButton" to="UILayer/UIControl" method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="DeathScreen/DeathPanel/HBoxContainer/CloseGameButton" to="UILayer/UIControl" method="_on_close_game_button_pressed"]
 
+[editable path="HomeBase/Base"]
+[editable path="HomeBase/HealingStation"]
 [editable path="Entities/PlayerCharacter"]

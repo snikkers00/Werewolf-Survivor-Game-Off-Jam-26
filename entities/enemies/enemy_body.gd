@@ -2,11 +2,13 @@ extends CharacterBody3D
 
 @onready var health_bar = %HealthBar
 
-@export var SPEED = 1
+@export var SPEED : float = 1
 @onready var enemysprite : AnimatedSprite3D = %EnemySprite
 @export var enemy_damage : int
 @export var enemy_xp_value : int
 @onready var health_comp = $Health
+
+@export var is_boss : bool = false
 
 var knockback_velocity : Vector3 = Vector3.ZERO
 
@@ -37,6 +39,9 @@ func _physics_process(_delta):
 
 func die():
 	EventsBus.xp_gained.emit(enemy_xp_value)
+	RunStats.enemies_killed += 1
+	if is_boss == true:
+		EventsBus.boss_defeated.emit()
 	queue_free()
 
 

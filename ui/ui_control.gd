@@ -11,17 +11,21 @@ func _ready():
 	day_night_label.text = "Day"
 	Resources.wood_label = %WoodLabel
 	Resources.stone_label = %StoneLabel
+	world_progress.max_value = int(world_timer.wait_time)
+	
 
 func _process(_delta):
+	world_progress.max_value = int(world_timer.wait_time)
 	world_progress.value = int(world_timer.time_left)
 	
 	if world_handler.is_night == true:
-		day_night_label.text = "Night"
+		day_night_label.text = "Night:" + str(RunStats.days_lasted + 1)
 	elif  world_handler.is_night == false:
-		day_night_label.text = "Day"
+		day_night_label.text = "Day:" + str(RunStats.days_lasted + 1)
 
 
 func _on_restart_button_pressed() -> void:
+	RunStats.reset_stats()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 

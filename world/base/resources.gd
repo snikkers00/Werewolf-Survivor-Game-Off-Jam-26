@@ -16,10 +16,12 @@ func gain_resource(resource_type : ResourceType, amount : int) -> void:
 	if resource_type == ResourceType.WOOD:
 		current_wood += amount * resource_rate
 		print("Gained wood")
+		RunStats.resources_gathered += amount * resource_rate
 		
 	elif resource_type == ResourceType.STONE:
 		current_stone += amount * resource_rate
 		print("Gained stone")
+		RunStats.resources_gathered += amount * resource_rate
 		
 	update_resource_ui()
 		

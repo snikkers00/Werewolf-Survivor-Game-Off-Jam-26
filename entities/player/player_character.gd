@@ -6,20 +6,25 @@ extends CharacterBody3D
 @onready var level_label : Label = %LevelLabel
 @onready var health_bar : ProgressBar = %PlayerHealthBar
 @onready var health_label : Label = %HealthLabel
+@onready var lives_label : Label = %LivesLabel
 
 @onready var death_screen : Panel = %DeathPanel
 @onready var upgrade_screen : Control = %UpgradeUI
 
+var starting_position : Vector3
 var exp_rate : float = 1.0
 var level : int = 1 
 var current_exp : int
 var exp_to_next_level : int
 @export var exp_to_level1 : int
 
+@export var lives_remaining : int = 3
+
 @export var SPEED = 2.5
 
 
 func _ready():
+	global_position = starting_position
 	exp_to_next_level = exp_to_level1
 	health_bar.max_value = health.max_health
 	update_exp_ui()
@@ -51,9 +56,16 @@ func _physics_process(delta):
 
 
 func _on_death():
-	print("Player has died")
-	get_tree().paused = true
-	death_screen.visible = true
+	if lives_remaining > 0:
+		lives_remaining -= 1
+		EventsBus.reset_to_day.emit(true)
+		respawn_player()
+		health.health = health.max_health
+		update_health_ui()
+	else:
+		print("Player has died (for good)")
+		get_tree().paused = true
+		death_screen.visible = true
 
 func shapeshift(is_night):
 	if is_night == true:
@@ -68,6 +80,7 @@ func gain_exp(amount):
 	while current_exp >= exp_to_next_level:
 		if get_tree().paused == false:
 			level_up()
+	RunStats.total_exp_gained += amount * exp_rate
 
 func level_up():
 	level += 1
@@ -94,6 +107,7 @@ func update_health_ui():
 	health_bar.value = health.health
 	health_bar.max_value = health.max_health
 	health_label.text = str(health.health) + "/" + str(health.max_health)
+	lives_label.text = "Lives Remaining: " + str(lives_remaining)
 
 
 func apply_player_upgrade(upgrade : Upgrade):
@@ -106,3 +120,13 @@ func apply_player_upgrade(upgrade : Upgrade):
 		exp_rate *= upgrade.stat_modifier
 	if upgrade.stat_modified == Upgrade.StatModified.MOVEMENT_SPEED:
 		SPEED *= upgrade.stat_modifier
+
+func respawn_player():
+	if lives_remaining == 2:
+		health.health = health.max_health * 0.5
+	elif lives_remaining == 1:
+		health.health = health.max_health * 0.25
+	update_health_ui()
+	global_position = starting_position
+	
+	

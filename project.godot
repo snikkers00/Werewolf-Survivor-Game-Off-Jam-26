@@ -22,6 +22,7 @@ config/icon="uid://bsmyj3vdewi13"
 RunState="*uid://dtddkg081xa1a"
 EventsBus="*uid://bq7mrlsy3sbl7"
 Resources="*uid://bplfkhpnhx0mx"
+RunStats="*uid://cly0rh6dt8xud"
 
 [display]
 

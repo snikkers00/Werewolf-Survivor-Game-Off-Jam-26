@@ -3,6 +3,7 @@ extends Node3D
 @onready var enemy_spawn_timer = %EnemySpawnTimer
 @export var enemy_types : Array [PackedScene] 
 @export var spawn_distance = 10
+@export var boss_scene : PackedScene
 
 func _ready():
 	EventsBus.phase_changed.connect(toggle_spawns)
@@ -17,6 +18,8 @@ func toggle_spawns(is_night):
 	elif is_night == true:
 		enemy_spawn_timer.paused = false
 		enemy_spawn_timer.start()
+		if RunStats.days_lasted == 5:
+			spawn_boss(boss_scene)
 
 func spawn_enemy():
 	var player_postion : Vector3 = get_tree().get_first_node_in_group("Player").global_position
@@ -28,3 +31,10 @@ func spawn_enemy():
 	var enemy_to_spawn = enemy_picked.instantiate()
 	add_child(enemy_to_spawn)
 	enemy_to_spawn.global_position = spawn_pos
+
+
+func spawn_boss(passed_boss_scene : PackedScene):
+	var boss_spawn_marker : Marker3D = %BossSpawnMarker
+	var boss_to_spawn : Node3D = passed_boss_scene.instantiate()
+	add_child(boss_to_spawn)
+	boss_to_spawn.global_position = boss_spawn_marker.global_position

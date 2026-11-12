@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ds8go3du3bsgp"]
+
+[ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="1_6s8o3"]
+
+[node name="boss_character" unique_id=720260743 instance=ExtResource("1_6s8o3")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="EnemyBody" parent="." index="0" unique_id=996570798]
+SPEED = 0.9
+enemy_damage = 5
+enemy_xp_value = 5
+is_boss = true
