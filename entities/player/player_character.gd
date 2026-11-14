@@ -129,4 +129,6 @@ func respawn_player():
 	update_health_ui()
 	global_position = starting_position
 	
+
+	
 	

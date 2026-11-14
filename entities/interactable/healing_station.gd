@@ -1,6 +1,7 @@
 extends UpgradableStructure
 
-var base_healing_tick_rate : float = 1.0
+var base_healing_tick_rate: float = 1.0
+
 
 func level_up() -> void:
 	super.level_up()

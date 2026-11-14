@@ -8,14 +8,15 @@ resource_local_to_scene = true
 [sub_resource type="SphereShape3D" id="SphereShape3D_sjn0o"]
 radius = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uk7ad"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjn0o"]
 transparency = 1
-albedo_color = Color(0, 1, 1, 0.039215688)
+albedo_color = Color(0, 1, 1, 0.19607843)
 
-[sub_resource type="SphereMesh" id="SphereMesh_o6l3f"]
-material = SubResource("StandardMaterial3D_uk7ad")
-radius = 1.0
-is_hemisphere = true
+[sub_resource type="CylinderMesh" id="CylinderMesh_vp4bf"]
+material = SubResource("StandardMaterial3D_sjn0o")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.025
 
 [node name="UpgradableStructure" type="Node3D" unique_id=311782980]
 script = ExtResource("1_sjn0o")
@@ -43,7 +44,9 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_sjn0o")
 
 [node name="ActivationVisual" type="MeshInstance3D" parent="ActivationArea" unique_id=324995240]
-mesh = SubResource("SphereMesh_o6l3f")
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.48791504, 0)
+mesh = SubResource("CylinderMesh_vp4bf")
 
 [node name="ActivationTimer" type="Timer" parent="ActivationArea" unique_id=1273910468]
 unique_name_in_owner = true

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dhbuvx6eiimey" path="res://entities/enemies/enemy_body.gd" id="1_ajstd"]
 [ext_resource type="Texture2D" uid="uid://22tpa8o2w5h8" path="res://entities/player/sprites/16x32 Walk-Sheet.png" id="1_iqk4o"]
 [ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_mykbo"]
+[ext_resource type="Texture2D" uid="uid://d1gybr3245yto" path="res://entities/sprites/wolfsheet2.png" id="3_r8oia"]
 [ext_resource type="Script" uid="uid://cok7ciycaoeiq" path="res://entities/enemies/enemy_hurtbox.gd" id="4_ibyd1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mlbij"]
@@ -85,6 +86,22 @@ region = Rect2(64, 128, 32, 32)
 atlas = ExtResource("1_iqk4o")
 region = Rect2(96, 128, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_67dpt"]
+atlas = ExtResource("3_r8oia")
+region = Rect2(320, 96, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nm67t"]
+atlas = ExtResource("3_r8oia")
+region = Rect2(384, 96, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ktuk"]
+atlas = ExtResource("3_r8oia")
+region = Rect2(448, 96, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmxve"]
+atlas = ExtResource("3_r8oia")
+region = Rect2(512, 96, 64, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6l3f"]
 animations = [{
 "frames": [{
@@ -151,15 +168,32 @@ animations = [{
 "loop": 1,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67dpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nm67t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ktuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmxve")
+}],
+"loop": 1,
+"name": &"wolf_move",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b6xf8"]
-radius = 0.076660156
-height = 0.24069214
+radius = 0.16210938
+height = 0.60253906
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6l3f"]
-radius = 0.099609375
-height = 0.29089355
+radius = 0.15820313
+height = 0.598999
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_o6l3f"]
 viewport_path = NodePath("SubViewport")
@@ -179,8 +213,11 @@ shaded = true
 double_sided = false
 alpha_cut = 2
 sprite_frames = SubResource("SpriteFrames_o6l3f")
+animation = &"wolf_move"
+frame_progress = 0.9723748
 
 [node name="EnemyCollision" type="CollisionShape3D" parent="." unique_id=1626003485]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.0048828125, -2.1343438e-10, 0)
 shape = SubResource("CapsuleShape3D_b6xf8")
 
 [node name="Health" type="Node" parent="." unique_id=1249439681]
@@ -194,7 +231,7 @@ collision_mask = 528
 script = ExtResource("4_ibyd1")
 
 [node name="EnemyCollisionHurt" type="CollisionShape3D" parent="EnemyHurtbox" unique_id=1111027781]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.026428223, 0)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.005554199, -2.427818e-10, 0)
 shape = SubResource("CapsuleShape3D_o6l3f")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=2108953240]
@@ -208,6 +245,7 @@ offset_right = 100.0
 offset_bottom = 27.0
 scale = Vector2(0.5, 0.5)
 max_value = 2.0
+show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=478945852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25910938, -0.23054472, 0)
