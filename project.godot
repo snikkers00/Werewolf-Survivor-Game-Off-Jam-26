@@ -17,12 +17,17 @@ run/main_scene="uid://b4hokgkltdlyf"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://bsmyj3vdewi13"
 
+[audio]
+
+buses/default_bus_layout="uid://6f3fksvuchj5"
+
 [autoload]
 
 RunState="*uid://dtddkg081xa1a"
 EventsBus="*uid://bq7mrlsy3sbl7"
 Resources="*uid://bplfkhpnhx0mx"
 RunStats="*uid://cly0rh6dt8xud"
+AudioManager="*uid://boi3b26dymcxd"
 
 [display]
 

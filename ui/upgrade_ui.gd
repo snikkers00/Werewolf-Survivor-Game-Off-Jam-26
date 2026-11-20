@@ -28,6 +28,7 @@ func apply_upgrade(upgrade):
 	EventsBus.upgrade_selected.emit(upgrade)
 
 func _on_upgrade_button_1_pressed() -> void:
+	AudioManager.play_sound("select")
 	apply_upgrade(upgrade1)
 	visible = false
 	get_tree().paused = false
@@ -35,6 +36,7 @@ func _on_upgrade_button_1_pressed() -> void:
 
 
 func _on_upgrade_button_2_pressed() -> void:
+	AudioManager.play_sound("select")
 	apply_upgrade(upgrade2)
 	visible = false
 	get_tree().paused = false
@@ -43,6 +45,7 @@ func _on_upgrade_button_2_pressed() -> void:
 
 
 func _on_upgrade_button_3_pressed() -> void:
+	AudioManager.play_sound("select")
 	apply_upgrade(upgrade3)
 	visible = false
 	get_tree().paused = false

@@ -26,6 +26,7 @@ var structure_model: Node3D = null
 
 var labels_available: bool = true
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_level = starting_level
@@ -86,6 +87,7 @@ func _on_interaction_area_body_exited(body: Node3D) -> void:
 		structure_interact_label.visible = false
 
 func upgrade() -> void:
+	AudioManager.play_sound("spend_resource")
 	current_level += 1
 	if current_level == 1 and structure_model:
 		structure_model.visible = true

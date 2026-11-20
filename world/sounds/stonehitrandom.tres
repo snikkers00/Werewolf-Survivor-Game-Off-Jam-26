@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://dcfu6rlpim6d"]
+
+[ext_resource type="AudioStream" uid="uid://cvfv47rbh4tdy" path="res://world/sounds/stoneHit1.ogg" id="1_4sskc"]
+[ext_resource type="AudioStream" uid="uid://cql7k8tnk7mxr" path="res://world/sounds/stoneHit2.ogg" id="2_jteni"]
+[ext_resource type="AudioStream" uid="uid://msvmg1ap1tbe" path="res://world/sounds/stoneHit3.ogg" id="3_em8hv"]
+[ext_resource type="AudioStream" uid="uid://de2rg0i14k3ik" path="res://world/sounds/stoneHit4.ogg" id="4_sf18f"]
+[ext_resource type="AudioStream" uid="uid://c25cly2o7c4n2" path="res://world/sounds/stoneHit5.ogg" id="5_wav5t"]
+
+[resource]
+random_pitch = 1.005793
+random_volume_offset_db = 0.1
+streams_count = 5
+stream_0/stream = ExtResource("1_4sskc")
+stream_1/stream = ExtResource("2_jteni")
+stream_2/stream = ExtResource("3_em8hv")
+stream_3/stream = ExtResource("4_sf18f")
+stream_4/stream = ExtResource("5_wav5t")

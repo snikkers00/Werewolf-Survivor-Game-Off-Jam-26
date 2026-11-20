@@ -12,6 +12,7 @@ func level_up() -> void:
 func activate_structure() -> void:
 	if current_level > 0:
 		var player = get_tree().get_first_node_in_group("Player")
-		player.health.health += base_healing_tick_rate
-		player.update_health_ui()
-		print("Healing player for " + str(base_healing_tick_rate) + " health")
+		if player.health.health < player.health.max_health:
+			player.health.health += base_healing_tick_rate
+			player.update_health_ui()
+			print("Healing player for " + str(base_healing_tick_rate) + " health")

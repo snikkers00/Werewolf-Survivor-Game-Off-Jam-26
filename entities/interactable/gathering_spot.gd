@@ -9,17 +9,27 @@ var visual_base_scale: Vector3
 
 @onready var activation_visual: MeshInstance3D = %ActivationVisual
 @onready var gathering_timer: Timer = %GatheringTimer
+@onready var sfx_player : AudioStreamPlayer3D = %SFXPlayer
+
+var loaded_sfx_stream : AudioStreamRandomizer
+
 
 func _ready() -> void:
 	EventsBus.phase_changed.connect(pause_gathering)
 	if visual != null:
 		visual_base_scale = visual.scale
+	if gather_type == Resources.ResourceType.STONE:
+		sfx_player.stream = load("res://world/sounds/stonehitrandom.tres")
+	if gather_type == Resources.ResourceType.WOOD:
+		sfx_player.stream = load("res://world/sounds/woodhitrandom.tres")
+
 
 func _on_gathering_timer_timeout() -> void:
 	if gather_type == null:
 		print("Gather type is not set for this gathering spot.")
 	elif gather_type != null:
 		Resources.gain_resource(gather_type, resource_value)
+		sfx_player.play()
 		if visual != null:
 			var get_feedback = create_tween()
 			get_feedback.tween_property(visual, "scale", visual_base_scale * 1.15, 0.1)

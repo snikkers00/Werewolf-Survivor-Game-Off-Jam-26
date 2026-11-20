@@ -20,7 +20,7 @@ var exp_to_next_level : int
 
 @export var lives_remaining : int = 3
 
-@export var SPEED = 2.5
+@export var speed : float
 
 
 func _ready():
@@ -45,11 +45,11 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
 
@@ -83,6 +83,7 @@ func gain_exp(amount):
 	RunStats.total_exp_gained += amount * exp_rate
 
 func level_up():
+	AudioManager.play_sound("level_up")
 	level += 1
 	current_exp -= exp_to_next_level
 	exp_to_next_level = exp_to_level1 * (level + .3)
@@ -119,7 +120,7 @@ func apply_player_upgrade(upgrade : Upgrade):
 	if upgrade.stat_modified == Upgrade.StatModified.XP_GAIN:
 		exp_rate *= upgrade.stat_modifier
 	if upgrade.stat_modified == Upgrade.StatModified.MOVEMENT_SPEED:
-		SPEED *= upgrade.stat_modifier
+		speed *= upgrade.stat_modifier
 
 func respawn_player():
 	if lives_remaining == 2:

@@ -1,0 +1,9 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://71lwyvi2641b"]
+
+[ext_resource type="AudioStream" uid="uid://cqii1sqxvxpv8" path="res://entities/enemies/hit_muffled.wav" id="1_16d5r"]
+[ext_resource type="AudioStream" uid="uid://boamxbtcttn0h" path="res://entities/enemies/hit_muffled_2.wav" id="2_jrnyi"]
+
+[resource]
+streams_count = 2
+stream_0/stream = ExtResource("1_16d5r")
+stream_1/stream = ExtResource("2_jrnyi")

@@ -10,6 +10,8 @@ extends CharacterBody3D
 
 @export var is_boss: bool = false
 
+@onready var enemy_hurt_player : AudioStreamPlayer3D = %EnemyHurtSFX
+
 var knockback_velocity: Vector3 = Vector3.ZERO
 
 func _ready():

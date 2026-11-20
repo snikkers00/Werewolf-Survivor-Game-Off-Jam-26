@@ -165,12 +165,13 @@ animations = [{
 radius = 0.07421875
 height = 0.24752808
 
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_uk7ad"]
+
 [node name="PlayerCharacter" type="CharacterBody3D" unique_id=1825023238 groups=["Player"]]
 collision_layer = 2
 collision_mask = 43
 script = ExtResource("1_b5xsv")
 exp_to_level1 = 5
-SPEED = 1.2
 
 [node name="PlayerCollision" type="CollisionShape3D" parent="." unique_id=2008961977]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14235505, 0)
@@ -238,5 +239,10 @@ offset_bottom = 27.0
 max_value = 50.0
 step = 1.0
 rounded = true
+
+[node name="PlayerSFX" type="AudioStreamPlayer3D" parent="." unique_id=880093235]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18078136, 0)
+stream = SubResource("AudioStreamPolyphonic_uk7ad")
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

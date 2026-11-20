@@ -1,0 +1,8 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://10tulx3r3161"]
+
+[ext_resource type="AudioStream" uid="uid://dcj301k2a1wl2" path="res://world/sounds/chop.ogg" id="1_36ynf"]
+
+[resource]
+random_pitch = 1.122462
+streams_count = 1
+stream_0/stream = ExtResource("1_36ynf")
