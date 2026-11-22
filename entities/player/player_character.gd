@@ -1,7 +1,8 @@
 extends CharacterBody3D
 
 @onready var health: Health = $Health
-@onready var player_sprite : AnimatedSprite3D = %PlayerSprite
+@onready var human_sprite : AnimatedSprite3D = %HumanSprite
+@onready var ww_sprite : AnimatedSprite3D = %WWSprite
 @onready var exp_bar : ProgressBar = %ExpBar
 @onready var level_label : Label = %LevelLabel
 @onready var health_bar : ProgressBar = %PlayerHealthBar
@@ -51,6 +52,17 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
 
+	if velocity.x > 0:
+		human_sprite.flip_h = false
+		ww_sprite.flip_h = false
+	
+	elif velocity.x < 0:
+		human_sprite.flip_h = true
+		ww_sprite.flip_h = true
+
+
+
+
 	move_and_slide()
 
 
@@ -69,9 +81,13 @@ func _on_death():
 
 func shapeshift(is_night):
 	if is_night == true:
-		create_tween().tween_property(player_sprite, "modulate", Color.DIM_GRAY, 3)
+		ww_sprite.visible = true
+		human_sprite.visible = false
+		ww_sprite.play("walk")
 	elif is_night == false:
-		create_tween().tween_property(player_sprite, "modulate", Color.WHITE, 3)
+		ww_sprite.visible = false
+		human_sprite.visible = true
+		ww_sprite.pause()
 		
 
 func gain_exp(amount):
@@ -130,6 +146,5 @@ func respawn_player():
 	update_health_ui()
 	global_position = starting_position
 	
-
 	
 	

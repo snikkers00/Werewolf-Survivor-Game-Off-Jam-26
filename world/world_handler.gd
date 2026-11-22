@@ -15,6 +15,8 @@ func _ready() -> void:
 	EventsBus.reset_to_day.connect(reset_to_day)
 	day_night_timer.start(day_length)
 	print("timer set to " + str(day_night_timer.wait_time))
+	animator.play("sunandmoonrotation")
+	animator.speed_scale = 0.0
 	if is_night:
 		set_night_lights()
 	else:
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	normalized_timer = clampf((day_night_timer.get_time_left() / day_night_timer.wait_time), 0.0, 1.0)
+	animator.seek((1.0 - normalized_timer) * animator.current_animation_length, true)
 	
 
 func _on_timer_timeout():
@@ -49,13 +52,9 @@ func reset_to_day(player_died: bool) -> void:
 
 
 func set_day_lights() -> void:
-	animator.play("sunandmoonrotation")
-	animator.seek(normalized_timer * animator.current_animation_length)
 	create_tween().tween_property(day_light, "light_energy", 1.2, 1.5)
 	create_tween().tween_property(night_light, "light_energy", 0, 1.5)
 
 func set_night_lights() -> void:
-	animator.play("sunandmoonrotation")
-	animator.seek(normalized_timer * animator.current_animation_length)
 	create_tween().tween_property(day_light, "light_energy", 0, 1.5)
 	create_tween().tween_property(night_light, "light_energy", 0.3, 1.5)

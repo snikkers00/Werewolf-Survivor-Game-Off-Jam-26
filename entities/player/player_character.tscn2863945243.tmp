@@ -1,0 +1,231 @@
+[gd_scene format=3 uid="uid://duuwtppa4sqgo"]
+
+[ext_resource type="Script" uid="uid://b581qiyy2dqp8" path="res://entities/player/player_character.gd" id="1_b5xsv"]
+[ext_resource type="Texture2D" uid="uid://22tpa8o2w5h8" path="res://entities/player/sprites/16x32 Walk-Sheet.png" id="1_rypbc"]
+[ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_gnhdx"]
+[ext_resource type="Texture2D" uid="uid://cjeyuvu21wbq5" path="res://entities/sprites/Walk.png" id="3_taaaw"]
+[ext_resource type="Script" uid="uid://bl8fhbe1weah6" path="res://entities/player/hurt_box.gd" id="3_wepyd"]
+[ext_resource type="Script" uid="uid://c6g5u3i4t7f8q" path="res://entities/player/attack_manager.gd" id="4_wepyd"]
+[ext_resource type="PackedScene" uid="uid://dmy6pbvxwb63r" path="res://entities/player/attacks/attack.tscn" id="5_5nbuu"]
+[ext_resource type="Texture2D" uid="uid://w3x1deecsmj6" path="res://entities/player/attacks/claw-slashes.svg" id="7_da08j"]
+[ext_resource type="Texture2D" uid="uid://cyktg2aiobtnk" path="res://entities/player/attacks/carnivore-mouth.svg" id="8_taaaw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6l3f"]
+radius = 0.08544922
+height = 0.26342773
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5xsv"]
+atlas = ExtResource("1_rypbc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f5q7"]
+atlas = ExtResource("1_rypbc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3bf2"]
+atlas = ExtResource("1_rypbc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnvnw"]
+atlas = ExtResource("1_rypbc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_taaaw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5xsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f5q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3bf2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnvnw")
+}],
+"loop": 1,
+"name": &"human_walk",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oriye"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(0, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jsr2"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(128, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1jwe"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(256, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltqxl"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(384, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u37yl"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(512, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtu6h"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(640, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nircb"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(768, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulwpx"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(896, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysq06"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(1024, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ivdl"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(1152, 40, 128, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ll1q"]
+atlas = ExtResource("3_taaaw")
+region = Rect2(1280, 40, 128, 88)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6l3f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oriye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jsr2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1jwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltqxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u37yl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtu6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nircb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulwpx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysq06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ivdl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ll1q")
+}],
+"loop": 1,
+"name": &"ww_walk",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ny5y"]
+radius = 0.07421875
+height = 0.24752808
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_uk7ad"]
+
+[node name="PlayerCharacter" type="CharacterBody3D" unique_id=1825023238 groups=["Player"]]
+collision_layer = 2
+collision_mask = 43
+script = ExtResource("1_b5xsv")
+exp_to_level1 = 5
+lives_remaining = null
+speed = null
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="." unique_id=2008961977]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14235505, 0)
+shape = SubResource("CapsuleShape3D_o6l3f")
+
+[node name="HumanSprite" type="AnimatedSprite3D" parent="." unique_id=187975107]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18178377, 0)
+billboard = 2
+shaded = true
+double_sided = false
+alpha_cut = 2
+sprite_frames = SubResource("SpriteFrames_taaaw")
+animation = &"human_walk"
+
+[node name="WWSprite" type="AnimatedSprite3D" parent="." unique_id=1959158096]
+unique_name_in_owner = true
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.18178377, 0)
+visible = false
+billboard = 2
+shaded = true
+double_sided = false
+alpha_cut = 2
+sprite_frames = SubResource("SpriteFrames_o6l3f")
+animation = &"ww_walk"
+
+[node name="CameraManager" type="Node3D" parent="." unique_id=243066430]
+transform = Transform3D(1, 0, 0, 0, 0.7660443, 0.6427875, 0, -0.6427875, 0.7660443, 0, 1.5, 1.538)
+
+[node name="Camera3D" type="Camera3D" parent="CameraManager" unique_id=2032683642]
+fov = 90.0
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=133662672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00061737, 0)
+collision_layer = 512
+collision_mask = 128
+script = ExtResource("3_wepyd")
+
+[node name="PlayerHurt" type="CollisionShape3D" parent="HurtBox" unique_id=446851708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1392107, 0)
+shape = SubResource("CapsuleShape3D_0ny5y")
+
+[node name="InvulnTimer" type="Timer" parent="HurtBox" unique_id=263199463]
+wait_time = 0.25
+one_shot = true
+
+[node name="Health" type="Node" parent="." unique_id=893059753]
+script = ExtResource("3_gnhdx")
+metadata/_custom_type_script = "uid://dmmwsrob8v0es"
+
+[node name="AttackManager" type="Node3D" parent="." unique_id=405674200]
+script = ExtResource("4_wepyd")
+
+[node name="Slash" parent="AttackManager" unique_id=1363159713 instance=ExtResource("5_5nbuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08583006, 0)
+attack_name = "Slash"
+attack_sprite = ExtResource("7_da08j")
+
+[node name="Bite" parent="AttackManager" unique_id=1088384613 instance=ExtResource("5_5nbuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08583006, 0)
+attack_name = "Bite"
+cooldown = 2.5
+damage = 2
+attack_sprite = ExtResource("8_taaaw")
+
+[node name="SubViewport2" type="SubViewport" parent="." unique_id=152789901]
+
+[node name="HealthBar" type="ProgressBar" parent="SubViewport2" unique_id=497389136]
+unique_name_in_owner = true
+offset_right = 100.0
+offset_bottom = 27.0
+max_value = 50.0
+step = 1.0
+rounded = true
+
+[node name="PlayerSFX" type="AudioStreamPlayer3D" parent="." unique_id=880093235]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18078136, 0)
+stream = SubResource("AudioStreamPolyphonic_uk7ad")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

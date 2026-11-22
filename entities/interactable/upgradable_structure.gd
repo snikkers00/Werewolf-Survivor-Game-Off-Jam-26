@@ -41,7 +41,6 @@ func _ready() -> void:
 	if current_level > 0 and structure_model:
 		structure_model.visible = true
 	elif current_level == 0 and structure_model:
-		structure_model.visible = false
 		interaction_area.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -97,7 +96,7 @@ func upgrade() -> void:
 	get_feedback.tween_property(structure_model, "scale", structure_model.scale, 0.1)
 
 	if current_level > 1:
-		interaction_area.scale += Vector3(0.5, 0.5, 0.5)
+		activation_area.scale += Vector3(0.5, 0.5, 0.5)
 
 func update_structure_label() -> void:
 	structure_interact_label.text = (structure_name + " Level: " + str(current_level) + "\nCost: " + str(upgrade_cost_wood) + " Wood, " + str(upgrade_cost_stone) + " Stone")

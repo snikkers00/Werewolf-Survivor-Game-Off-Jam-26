@@ -18,7 +18,9 @@ func _ready():
 	health_comp.death.connect(die)
 	health_bar.max_value = health_comp.health
 	health_bar.value = health_comp.health
-	enemysprite.play("wolf_move")
+	enemysprite.play("move")
+	
+
 
 func _physics_process(_delta):
 	var player_postion: Vector3 = get_tree().get_first_node_in_group("Player").global_position
