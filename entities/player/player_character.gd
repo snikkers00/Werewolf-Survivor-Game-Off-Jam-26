@@ -23,6 +23,7 @@ var exp_to_next_level : int
 
 @export var speed : float
 
+@onready var introlabel : Label3D = %IntroLabel
 
 func _ready():
 	global_position = starting_position
@@ -30,11 +31,15 @@ func _ready():
 	health_bar.max_value = health.max_health
 	update_exp_ui()
 	update_health_ui()
-	
+	human_sprite.play("idle")
+
+	introlabelfade()
+
 	health.death.connect(_on_death)
 	EventsBus.phase_changed.connect(shapeshift)
 	EventsBus.xp_gained.connect(gain_exp)
 	EventsBus.upgrade_selected.connect(apply_player_upgrade)
+	EventsBus.game_fail.connect(gamefailstate)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -60,7 +65,10 @@ func _physics_process(delta):
 		human_sprite.flip_h = true
 		ww_sprite.flip_h = true
 
-
+	if velocity.x or velocity.z != 0:
+		human_sprite.play("walk")
+	else:
+		human_sprite.play("idle")
 
 
 	move_and_slide()
@@ -97,6 +105,7 @@ func gain_exp(amount):
 		if get_tree().paused == false:
 			level_up()
 	RunStats.total_exp_gained += amount * exp_rate
+	AudioManager.play_sound("gain_exp")
 
 func level_up():
 	AudioManager.play_sound("level_up")
@@ -147,4 +156,10 @@ func respawn_player():
 	global_position = starting_position
 	
 	
-	
+func introlabelfade():
+	introlabel.visible = true
+	create_tween().tween_property(introlabel, "modulate", Color.TRANSPARENT, 10)
+
+func gamefailstate():
+	lives_remaining = 0
+	_on_death()

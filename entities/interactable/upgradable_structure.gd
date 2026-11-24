@@ -26,6 +26,8 @@ var structure_model: Node3D = null
 
 var labels_available: bool = true
 
+var unavailable : bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -99,8 +101,11 @@ func upgrade() -> void:
 		activation_area.scale += Vector3(0.5, 0.5, 0.5)
 
 func update_structure_label() -> void:
-	structure_interact_label.text = (structure_name + " Level: " + str(current_level) + "\nCost: " + str(upgrade_cost_wood) + " Wood, " + str(upgrade_cost_stone) + " Stone")
-	structure_interact_label.text += "\nPress E to upgrade " + structure_name + " to Level " + str(current_level + 1)
+	if unavailable == true:
+		structure_interact_label.text = (structure_name + " Locked")
+	else:
+		structure_interact_label.text = (structure_name + " Level: " + str(current_level) + "\nCost: " + str(upgrade_cost_wood) + " Wood, " + str(upgrade_cost_stone) + " Stone")
+		structure_interact_label.text += "\nPress E to upgrade " + structure_name + " to Level " + str(current_level + 1)
 
 
 func _on_activation_timer_timeout() -> void:

@@ -37,6 +37,8 @@ func _on_timer_timeout():
 	
 	elif is_night == false:
 		RunStats.days_lasted += 1
+		if RunStats.days_lasted > 6:
+			EventsBus.game_fail.emit()
 		day_night_timer.start(day_length)
 		set_day_lights()
 		print("timer set to " + str(day_night_timer.wait_time))

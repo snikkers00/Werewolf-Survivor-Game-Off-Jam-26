@@ -2,11 +2,34 @@
 
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="1_6s8o3"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1rm8b"]
+radius = 0.324
+height = 1.296
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5nxuk"]
+radius = 0.316
+height = 1.264
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1rm8b"]
+viewport_path = NodePath("SubViewport")
+
 [node name="boss_character" unique_id=720260743 instance=ExtResource("1_6s8o3")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
 [node name="EnemyBody" parent="." index="0" unique_id=996570798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3319937, 0)
 SPEED = 0.9
 enemy_damage = 5
 enemy_xp_value = 5
 is_boss = true
+
+[node name="EnemySprite" parent="EnemyBody" index="0" unique_id=1948147315]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="EnemyCollision" parent="EnemyBody" index="1" unique_id=1626003485]
+shape = SubResource("CapsuleShape3D_1rm8b")
+
+[node name="EnemyCollisionHurt" parent="EnemyBody/EnemyHurtbox" parent_id_path=PackedInt32Array(1592162980) index="0" unique_id=1111027781]
+shape = SubResource("CapsuleShape3D_5nxuk")
+
+[node name="Sprite3D" parent="EnemyBody" index="4" unique_id=478945852]
+texture = SubResource("ViewportTexture_1rm8b")

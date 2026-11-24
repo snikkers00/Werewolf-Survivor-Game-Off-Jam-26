@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://bm4orx4j6bet3"]
 
+[ext_resource type="Texture2D" uid="uid://csxc1u7on1yjg" path="res://entities/player/upgrades/hearts.svg" id="1_cgscj"]
 [ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_drqch"]
 
 [resource]
@@ -7,4 +8,5 @@ script = ExtResource("1_drqch")
 name = "Denser Muscles"
 description = "Increase Health"
 stat_modifier = 1.1
+icon = ExtResource("1_cgscj")
 metadata/_custom_type_script = "uid://diqhnlttuvp4x"

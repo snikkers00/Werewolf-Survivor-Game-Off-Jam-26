@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://dhmidccp00ikq"]
 
+[ext_resource type="Texture2D" uid="uid://d1r4lg4xaeyph" path="res://entities/player/upgrades/wingfoot.svg" id="1_vrb4u"]
 [ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_yw88p"]
 
 [resource]
@@ -8,4 +9,5 @@ name = "Lighter Feet"
 description = "Increase Move Speed"
 stat_modified = 3
 stat_modifier = 1.1
+icon = ExtResource("1_vrb4u")
 metadata/_custom_type_script = "uid://diqhnlttuvp4x"

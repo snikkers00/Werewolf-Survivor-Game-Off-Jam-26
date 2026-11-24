@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://bmtlikpa74git"]
+
+[ext_resource type="Texture2D" uid="uid://ch2hxfpommf35" path="res://ui/assets/tile_0020.png" id="1_vkyp2"]
+
+[resource]
+texture = ExtResource("1_vkyp2")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+modulate_color = Color(1.5, 1.5, 1.5, 1)

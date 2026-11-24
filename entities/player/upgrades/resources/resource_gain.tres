@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://ua35a8eyqrvs"]
 
+[ext_resource type="Texture2D" uid="uid://c4f3k8v13u8kc" path="res://entities/player/upgrades/stone-crafting.svg" id="1_4rg0d"]
 [ext_resource type="Script" uid="uid://diqhnlttuvp4x" path="res://entities/player/upgrades/upgrade.gd" id="1_eyy3n"]
 
 [resource]
@@ -8,4 +9,5 @@ name = "Maintain Control"
 description = "Gather more during the day"
 stat_modified = 4
 stat_modifier = 1.05
+icon = ExtResource("1_4rg0d")
 metadata/_custom_type_script = "uid://diqhnlttuvp4x"

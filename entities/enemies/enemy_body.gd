@@ -16,13 +16,15 @@ var knockback_velocity: Vector3 = Vector3.ZERO
 
 func _ready():
 	health_comp.death.connect(die)
-	health_bar.max_value = health_comp.health
-	health_bar.value = health_comp.health
+	#health_bar.max_value = health_comp.health
+	#health_bar.value = health_comp.health
 	enemysprite.play("move")
 	
 
 
 func _physics_process(_delta):
+	if not is_on_floor():
+		velocity += get_gravity() * _delta
 	var player_postion: Vector3 = get_tree().get_first_node_in_group("Player").global_position
 	if player_postion != null:
 		var dir_to_player = global_position.direction_to(player_postion).normalized()
@@ -52,7 +54,7 @@ func die():
 
 func _on_enemy_hurtbox_area_entered(area):
 	health_comp.damage(area.damage)
-	health_bar.value -= area.damage
+	#health_bar.value -= area.damage
 	var player_postion: Vector3 = get_tree().get_first_node_in_group("Player").global_position
 	knockback_velocity = (global_position.direction_to(player_postion) * -1) * 8
 	knockback_velocity.y = 0

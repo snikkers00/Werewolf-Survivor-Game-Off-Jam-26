@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
 [ext_resource type="PackedScene" uid="uid://c8qh1wfiplojh" path="res://world/base/scenes/rock_b.tscn" id="3_t6m8u"]
 [ext_resource type="PackedScene" uid="uid://de4m6m70ttarv" path="res://entities/interactable/upgradable_structure.tscn" id="3_tlxoi"]
+[ext_resource type="Script" uid="uid://cp1r8n8entirr" path="res://entities/interactable/crafting_station.gd" id="4_83ifp"]
 [ext_resource type="PackedScene" uid="uid://35qpp0350sd3" path="res://entities/enemies/enemy_character.tscn" id="4_rsju0"]
 [ext_resource type="Script" uid="uid://bs0cktatuwid4" path="res://entities/interactable/base_structure.gd" id="4_tlxoi"]
 [ext_resource type="PackedScene" uid="uid://bbapqscncpey8" path="res://world/base/scenes/campfire_pit.tscn" id="5_onsxo"]
@@ -19,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://dhmidccp00ikq" path="res://entities/player/upgrades/resources/move_speed.tres" id="9_o0hhk"]
 [ext_resource type="Resource" uid="uid://ddg5kbjtn2s5d" path="res://entities/player/upgrades/resources/claw_attack_speed.tres" id="10_2bho7"]
 [ext_resource type="Resource" uid="uid://bm4orx4j6bet3" path="res://entities/player/upgrades/resources/Health_increase.tres" id="11_ootrp"]
+[ext_resource type="FontFile" uid="uid://c4gbpwe4uou0s" path="res://ui/Kenney Pixel.ttf" id="12_1uymw"]
 [ext_resource type="Resource" uid="uid://cpwar8na6vsh5" path="res://entities/player/upgrades/resources/exp_gain.tres" id="12_ootrp"]
 [ext_resource type="PackedScene" uid="uid://cqotjlkg7u1kn" path="res://entities/enemies/enemy_character_bat.tscn" id="13_fdd8g"]
 [ext_resource type="PackedScene" uid="uid://ds8go3du3bsgp" path="res://entities/enemies/boss_character.tscn" id="13_q1dqp"]
@@ -31,7 +33,16 @@
 [ext_resource type="PackedScene" uid="uid://bbne58nq5bcvs" path="res://world/base/scenes/tree.tscn" id="17_4g0kw"]
 [ext_resource type="PackedScene" uid="uid://eiygpipls6re" path="res://world/base/models/grass.fbx" id="17_82ik7"]
 [ext_resource type="PackedScene" uid="uid://d00rtok3dyk8d" path="res://world/base/models/tree.fbx" id="18_qt2dd"]
+[ext_resource type="Theme" uid="uid://6kamfp5c2f81" path="res://default_theme.tres" id="21_83ifp"]
+[ext_resource type="Texture2D" uid="uid://c6ubotfc17s83" path="res://ui/assets/tile_0030.png" id="25_ob7fg"]
+[ext_resource type="Texture2D" uid="uid://dnkxx5yd4uow5" path="res://ui/assets/tile_0026.png" id="25_w4es6"]
+[ext_resource type="Texture2D" uid="uid://bd8p1bai5c7xm" path="res://ui/assets/tile_0057.png" id="26_toecx"]
+[ext_resource type="Texture2D" uid="uid://b5powkpn8lsei" path="res://ui/assets/tile_0056.png" id="27_h46o1"]
+[ext_resource type="Texture2D" uid="uid://gcxbx24iw3xs" path="res://ui/assets/tile_0058.png" id="28_3x1dl"]
 [ext_resource type="PackedScene" uid="uid://i0c5hmcu21i2" path="res://world/base/scenes/workbench.tscn" id="32_82ik7"]
+[ext_resource type="StyleBox" uid="uid://bvxjktmlxd6xp" path="res://ui/upgradebox_normal.tres" id="36_k3yes"]
+[ext_resource type="StyleBox" uid="uid://csb47j7n4xoyy" path="res://ui/upgradebox_pressed.tres" id="37_xfsdc"]
+[ext_resource type="StyleBox" uid="uid://bmtlikpa74git" path="res://ui/upgradebox_hover.tres" id="38_w4es6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1wpd2"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -87,33 +98,74 @@ size = Vector2(100, 100)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uk7ad"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_82ik7"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_toecx"]
 resource_local_to_scene = true
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_83ifp"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h46o1"]
 resource_local_to_scene = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82ik7"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3x1dl"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1uymw"]
 transparency = 1
-albedo_color = Color(1, 0, 0, 0.039215688)
+albedo_color = Color(1, 0, 0, 0.19607843)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_83ifp"]
-material = SubResource("StandardMaterial3D_82ik7")
-height = 1.0241699
+[sub_resource type="CylinderMesh" id="CylinderMesh_ob7fg"]
+material = SubResource("StandardMaterial3D_1uymw")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.025
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xfsdc"]
+texture = ExtResource("25_w4es6")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qju2h"]
+bg_color = Color(0, 0, 0.8901186, 0.75000006)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8001019, 0.8001019, 0.8001019, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6l3f"]
 font_size = 30
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6l3f"]
+texture = ExtResource("26_toecx")
+modulate_color = Color(0.85814106, 0.85814106, 0.85814106, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toecx"]
+bg_color = Color(1, 1, 1, 0.2)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.8001019, 0.8001019, 0.8001019, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsju0"]
 bg_color = Color(0.6745098, 0, 0, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_toecx"]
+base_font = ExtResource("12_1uymw")
+variation_embolden = 0.3
+spacing_glyph = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_toecx"]
+font = SubResource("FontVariation_toecx")
+font_size = 24
 
 [node name="MainWorld" type="Node3D" unique_id=514236664]
 
 [node name="WorldHandler" type="Node3D" parent="." unique_id=1527563304]
 unique_name_in_owner = true
 script = ExtResource("1_qt2dd")
-day_length = 30.0
-night_length = 30.0
+day_length = 10.0
+night_length = 10.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="WorldHandler" unique_id=1387091601]
 environment = SubResource("Environment_6i3v4")
@@ -127,16 +179,13 @@ top_level = true
 
 [node name="DayLight" type="DirectionalLight3D" parent="WorldHandler/WorldEnvironment/Marker3D" unique_id=1344324537]
 unique_name_in_owner = true
-transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 0.9999999, -1.4901161e-08, 5.7505054, 7.2648373)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -1.4901161e-08, 5.7505054, 7.2648373)
 light_color = Color(1, 0.48235294, 0.4745098, 1)
-light_energy = 1.2
-light_indirect_energy = 1.5
-light_volumetric_fog_energy = 1.5
 shadow_enabled = true
 
 [node name="NightLight" type="DirectionalLight3D" parent="WorldHandler/WorldEnvironment/Marker3D" unique_id=498538066]
 unique_name_in_owner = true
-transform = Transform3D(0.9999999, 0, 0, 0, 0.7071067, 0.7071067, 0, -0.7071067, 0.7071067, 0, 5.7505045, 7.2648373)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.25881904, 0.9659257, 0, -0.9659257, 0.25881904, 0, 5.7505045, 7.2648373)
 light_color = Color(0.19607843, 0.46666667, 1, 1)
 light_energy = 0.3
 shadow_enabled = true
@@ -165,6 +214,7 @@ shape = SubResource("WorldBoundaryShape3D_uk7ad")
 
 [node name="Crafting" parent="HomeBase" unique_id=1764510604 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.677, 0.01, 0.088)
+script = ExtResource("4_83ifp")
 structure_name = "Crafting Station"
 structure_model_scene = ExtResource("32_82ik7")
 cost_type = 1
@@ -173,6 +223,9 @@ current_level = 0
 upgrade_cost_wood = 0
 upgrade_cost_stone = 3
 
+[node name="InteractionCollision" parent="HomeBase/Crafting/InteractionArea" parent_id_path=PackedInt32Array(1764510604, 23553612) index="0" unique_id=785179818]
+shape = SubResource("CylinderShape3D_toecx")
+
 [node name="Base" parent="HomeBase" unique_id=311782980 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.411, 0.01, -1.583)
 script = ExtResource("4_tlxoi")
@@ -180,7 +233,7 @@ base_exp_tick_rate = 1.0
 structure_model_scene = ExtResource("5_q1dqp")
 
 [node name="InteractionCollision" parent="HomeBase/Base/InteractionArea" parent_id_path=PackedInt32Array(311782980, 23553612) index="0" unique_id=785179818]
-shape = SubResource("CylinderShape3D_82ik7")
+shape = SubResource("CylinderShape3D_h46o1")
 
 [node name="HealingStation" parent="HomeBase" unique_id=2064620942 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.222)
@@ -193,10 +246,10 @@ current_level = 0
 upgrade_cost_stone = 0
 
 [node name="InteractionCollision" parent="HomeBase/HealingStation/InteractionArea" parent_id_path=PackedInt32Array(2064620942, 23553612) index="0" unique_id=785179818]
-shape = SubResource("CylinderShape3D_83ifp")
+shape = SubResource("CylinderShape3D_3x1dl")
 
 [node name="ActivationVisual" parent="HomeBase/HealingStation/ActivationArea" parent_id_path=PackedInt32Array(2064620942, 222908699) index="1" unique_id=324995240]
-mesh = SubResource("CylinderMesh_83ifp")
+mesh = SubResource("CylinderMesh_ob7fg")
 
 [node name="rock-b" parent="HomeBase" unique_id=808174205 instance=ExtResource("3_t6m8u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2482028, 0, -1.4408872)
@@ -216,6 +269,13 @@ health = 25
 
 [node name="Slash" parent="Entities/PlayerCharacter/AttackManager" parent_id_path=PackedInt32Array(1825023238, 405674200) index="0" unique_id=1363159713]
 attack_name = ""
+
+[node name="IntroLabel" type="Label3D" parent="Entities/PlayerCharacter" unique_id=1686863322]
+unique_name_in_owner = true
+transform = Transform3D(0.83333313, 0, 0, 0, 0.83333313, 0, 0, 0, 0.83333313, 0, 1.1981943, 0)
+text = "\"Gather. Upgrade. Survive.
+Repeat...\""
+font = ExtResource("12_1uymw")
 
 [node name="EnemySpawner" type="Node3D" parent="Entities" unique_id=1442707549]
 script = ExtResource("3_8qjvd")
@@ -12617,12 +12677,14 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = ExtResource("21_83ifp")
 script = ExtResource("3_5aanf")
 
 [node name="MarginContainer" type="MarginContainer" parent="UILayer/UIControl" unique_id=59919266]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
+theme = ExtResource("21_83ifp")
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
@@ -12630,10 +12692,13 @@ theme_override_constants/margin_bottom = 25
 
 [node name="WorldProgress" type="ProgressBar" parent="UILayer/UIControl/MarginContainer" unique_id=795923172]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 40)
-custom_maximum_size = Vector2(500, 40)
+custom_minimum_size = Vector2(500, 25)
+custom_maximum_size = Vector2(500, 25)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("21_83ifp")
+theme_override_styles/background = SubResource("StyleBoxTexture_xfsdc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qju2h")
 max_value = 15.0
 step = 1.0
 rounded = true
@@ -12645,12 +12710,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -526.0
-offset_top = 32.0
-offset_right = 526.0
-offset_bottom = 74.0
+offset_left = -183.0
+offset_right = 183.0
+offset_bottom = 42.0
 grow_horizontal = 2
 size_flags_vertical = 0
+theme = ExtResource("21_83ifp")
 text = "DAY"
 label_settings = SubResource("LabelSettings_o6l3f")
 horizontal_alignment = 1
@@ -12672,6 +12737,9 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
+theme = ExtResource("21_83ifp")
+theme_override_styles/background = SubResource("StyleBoxTexture_o6l3f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_toecx")
 max_value = 15.0
 step = 1.0
 rounded = true
@@ -12683,10 +12751,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -27.0
-offset_right = 27.0
-offset_bottom = 23.0
+offset_left = -496.0
+offset_top = -26.0
+offset_right = -427.0
+offset_bottom = -2.0
 grow_horizontal = 2
+theme = ExtResource("21_83ifp")
 text = "Level 1"
 horizontal_alignment = 1
 
@@ -12697,6 +12767,7 @@ offset_left = 525.0
 offset_top = 581.0
 offset_right = 625.0
 offset_bottom = 608.0
+theme = ExtResource("21_83ifp")
 theme_override_styles/fill = SubResource("StyleBoxFlat_rsju0")
 max_value = 50.0
 step = 1.0
@@ -12706,13 +12777,18 @@ show_percentage = false
 [node name="HealthLabel" type="Label" parent="UILayer/UIControl/PlayerHealthBar" unique_id=6857664]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -20.0
+offset_top = -11.5
 offset_right = 20.0
-offset_bottom = 23.0
+offset_bottom = 11.5
 grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("21_83ifp")
 text = "10/10"
 horizontal_alignment = 1
 
@@ -12730,34 +12806,81 @@ offset_right = 100.0
 offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("21_83ifp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="UILayer" unique_id=879850418]
+[node name="Tile0056" type="TextureRect" parent="UILayer/UIControl" unique_id=1261811880]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 610.0
+offset_right = 76.0
+offset_bottom = 642.0
+texture = ExtResource("27_h46o1")
+
+[node name="Tile0057" type="TextureRect" parent="UILayer/UIControl" unique_id=935327959]
+layout_mode = 0
+offset_left = 1076.0
+offset_top = 610.0
+offset_right = 1108.0
+offset_bottom = 642.0
+texture = ExtResource("28_3x1dl")
+
+[node name="PanelContainer" type="NinePatchRect" parent="UILayer" unique_id=985221576]
+custom_minimum_size = Vector2(160, 55)
+custom_maximum_size = Vector2(160, 55)
 offset_left = 50.0
 offset_top = 29.0
 offset_right = 247.0
 offset_bottom = 93.0
+theme = ExtResource("21_83ifp")
+texture = ExtResource("25_ob7fg")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
 
 [node name="ResourceBox" type="BoxContainer" parent="UILayer/PanelContainer" unique_id=415553848]
-layout_mode = 2
+custom_minimum_size = Vector2(150, 45)
+custom_maximum_size = Vector2(150, 45)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -22.5
+offset_right = 75.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("21_83ifp")
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/PanelContainer/ResourceBox" unique_id=1795673319]
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 texture = ExtResource("13_v1kbc")
+expand_mode = 3
 
 [node name="WoodLabel" type="Label" parent="UILayer/PanelContainer/ResourceBox" unique_id=1227467959]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 text = ": 0"
 
 [node name="TextureRect2" type="TextureRect" parent="UILayer/PanelContainer/ResourceBox" unique_id=1511728282]
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 texture = ExtResource("14_c45uy")
+expand_mode = 3
 
 [node name="StoneLabel" type="Label" parent="UILayer/PanelContainer/ResourceBox" unique_id=1366112990]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 text = ": 0"
 
 [node name="LevelUpLayer" type="CanvasLayer" parent="." unique_id=955211817]
@@ -12779,6 +12902,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 script = ExtResource("6_2ccdf")
 all_upgrades = Array[ExtResource("7_njfbw")]([ExtResource("8_xguvr"), ExtResource("9_o0hhk"), ExtResource("10_2bho7"), ExtResource("11_ootrp"), ExtResource("12_ootrp"), ExtResource("13_yae5m")])
 
@@ -12792,12 +12916,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 
 [node name="UpgradeButton1" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=348569688]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 custom_maximum_size = Vector2(200, 200)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1" unique_id=237324426]
 custom_minimum_size = Vector2(200, 200)
@@ -12805,24 +12934,29 @@ custom_maximum_size = Vector2(200, 200)
 layout_mode = 0
 offset_right = 200.0
 offset_bottom = 200.0
+theme = ExtResource("21_83ifp")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=1933737100]
-modulate = Color(1, 1, 1, 0.19607843)
+modulate = Color(0, 0, 0, 1)
+custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
 texture = ExtResource("6_w2sia")
 
 [node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=1070929837]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme = ExtResource("21_83ifp")
 text = "Harder Claws"
+label_settings = SubResource("LabelSettings_toecx")
 horizontal_alignment = 1
 
 [node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1/MarginContainer" unique_id=152727140]
@@ -12831,15 +12965,22 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
+theme_override_font_sizes/normal_font_size = 24
 text = "Claws Damage Increase: "
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="UpgradeButton2" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=67209969]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 custom_maximum_size = Vector2(200, 200)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2" unique_id=1129158769]
 custom_minimum_size = Vector2(200, 200)
@@ -12847,24 +12988,29 @@ custom_maximum_size = Vector2(200, 200)
 layout_mode = 0
 offset_right = 200.0
 offset_bottom = 200.0
+theme = ExtResource("21_83ifp")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=379164725]
-modulate = Color(1, 1, 1, 0.19607843)
+modulate = Color(0, 0, 0, 1)
+custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
 texture = ExtResource("6_w2sia")
 
 [node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=1520722820]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme = ExtResource("21_83ifp")
 text = "Harder Claws"
+label_settings = SubResource("LabelSettings_toecx")
 horizontal_alignment = 1
 
 [node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2/MarginContainer" unique_id=1009498475]
@@ -12873,15 +13019,22 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
+theme_override_font_sizes/normal_font_size = 24
 text = "Claws Damage Increase: "
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="UpgradeButton3" type="Button" parent="LevelUpLayer/UpgradeUI/Upgrades" unique_id=1217316261]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 custom_maximum_size = Vector2(200, 200)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3" unique_id=680399816]
 custom_minimum_size = Vector2(200, 200)
@@ -12889,24 +13042,29 @@ custom_maximum_size = Vector2(200, 200)
 layout_mode = 0
 offset_right = 200.0
 offset_bottom = 200.0
+theme = ExtResource("21_83ifp")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="UpgradeIcon" type="TextureRect" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1807100951]
-modulate = Color(1, 1, 1, 0.19607843)
+modulate = Color(0, 0, 0, 1)
+custom_maximum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
 texture = ExtResource("6_w2sia")
 
 [node name="UpgradeNameLabel" type="Label" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1774338394]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme = ExtResource("21_83ifp")
 text = "Harder Claws"
+label_settings = SubResource("LabelSettings_toecx")
 horizontal_alignment = 1
 
 [node name="UpgradeDescLabel" type="RichTextLabel" parent="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3/MarginContainer" unique_id=1129358151]
@@ -12915,9 +13073,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_filter = 2
+theme = ExtResource("21_83ifp")
+theme_override_font_sizes/normal_font_size = 24
 text = "Claws Damage Increase: "
 fit_content = true
 horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="DeathScreen" type="CanvasLayer" parent="." unique_id=329103570]
 unique_name_in_owner = true
@@ -12938,6 +13099,7 @@ offset_right = 400.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 
 [node name="DeathLabel" type="Label" parent="DeathScreen/DeathPanel" unique_id=206715062]
 layout_mode = 1
@@ -12952,6 +13114,7 @@ offset_right = 43.5
 offset_bottom = -139.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 theme_override_font_sizes/font_size = 32
 text = "You Died! :("
 horizontal_alignment = 1
@@ -12970,22 +13133,26 @@ offset_right = 300.0
 offset_bottom = 149.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 theme_override_constants/separation = 50
 alignment = 1
 
 [node name="RestartButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=107545002]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 text = "Restart?"
 
 [node name="MainMenuButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=427750914]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 text = "Main Menu?"
 
 [node name="CloseGameButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=1299562945]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme = ExtResource("21_83ifp")
 text = "Close Game?
 "
 
@@ -13003,6 +13170,7 @@ offset_right = 100.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
 text = "Days Lasted: 0
 Resources Gathered : 0
 Knowledge Gained: 0
@@ -13076,6 +13244,7 @@ text = "Close Game?
 [connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_2_pressed"]
 [connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_3_pressed"]
 
+[editable path="HomeBase/Crafting"]
 [editable path="HomeBase/Base"]
 [editable path="HomeBase/HealingStation"]
 [editable path="Entities/PlayerCharacter"]

@@ -45,3 +45,4 @@ bus = &"BGM"
 [node name="UISFX" type="AudioStreamPlayer" parent="." unique_id=2036068977]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamPolyphonic_da08j")
+bus = &"UISFX"

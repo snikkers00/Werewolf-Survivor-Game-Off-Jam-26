@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://de4m6m70ttarv"]
 
 [ext_resource type="Script" uid="uid://c1nrjru8hmygi" path="res://entities/interactable/upgradable_structure.gd" id="1_sjn0o"]
+[ext_resource type="FontFile" uid="uid://c4gbpwe4uou0s" path="res://ui/Kenney Pixel.ttf" id="2_8h5rm"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_mcwoh"]
 resource_local_to_scene = true
@@ -57,6 +58,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8269195, 0)
 visible = false
 text = "Base Upgrade
 Cost: 2 Wood, 2 Stone"
+font = ExtResource("2_8h5rm")
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
