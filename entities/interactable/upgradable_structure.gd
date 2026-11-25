@@ -22,7 +22,7 @@ var structure_model: Node3D = null
 @onready var activation_area: Area3D = %ActivationArea
 @onready var interaction_area: Area3D = %InteractionArea
 @onready var activation_timer: Timer = %ActivationTimer
-@onready var visual: MeshInstance3D = %ActivationVisual
+@onready var activation_visual: MeshInstance3D = %ActivationVisual
 
 var labels_available: bool = true
 
@@ -43,7 +43,7 @@ func _ready() -> void:
 	if current_level > 0 and structure_model:
 		structure_model.visible = true
 	elif current_level == 0 and structure_model:
-		interaction_area.visible = false
+		activation_visual.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and structure_interact_label.visible == true:
@@ -124,12 +124,12 @@ func pause_activation(is_night: bool) -> void:
 		activation_timer.stop()
 		activation_area.monitoring = false
 		interaction_area.monitoring = false
-		visual.visible = false
+		activation_visual.visible = false
 		print(structure_name + " activation paused")
 	elif is_night == false:
 		activation_area.monitoring = true
 		interaction_area.monitoring = true
-		visual.visible = true
+		activation_visual.visible = true
 
 func activate_structure() -> void:
 	pass # Replace with function body.

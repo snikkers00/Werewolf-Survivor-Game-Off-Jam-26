@@ -2,9 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dhbuvx6eiimey" path="res://entities/enemies/enemy_body.gd" id="1_k3oi0"]
 [ext_resource type="Texture2D" uid="uid://dw01dqtpbq2x8" path="res://entities/sprites/wolfsheet1.png" id="2_02nkc"]
+[ext_resource type="Shader" uid="uid://nfbysywjntjc" path="res://entities/player/sprite_lighting.gdshader" id="2_k3oi0"]
 [ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="4_6dutu"]
 [ext_resource type="Script" uid="uid://cok7ciycaoeiq" path="res://entities/enemies/enemy_hurtbox.gd" id="5_gjx6y"]
 [ext_resource type="AudioStream" uid="uid://71lwyvi2641b" path="res://entities/enemies/enemyhitrandom.tres" id="6_srbw4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmiht"]
+render_priority = 0
+shader = ExtResource("2_k3oi0")
+shader_parameter/y_billboard = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3oi0"]
 atlas = ExtResource("2_02nkc")
@@ -79,6 +85,7 @@ enemy_xp_value = 1
 
 [node name="EnemySprite" type="AnimatedSprite3D" parent="EnemyBody" unique_id=1948147315]
 unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_nmiht")
 shaded = true
 double_sided = false
 alpha_cut = 2
@@ -92,7 +99,8 @@ shape = SubResource("CapsuleShape3D_b6xf8")
 
 [node name="Health" type="Node" parent="EnemyBody" unique_id=1249439681]
 script = ExtResource("4_6dutu")
-health = 2
+max_health = 5
+health = 5
 metadata/_custom_type_script = "uid://dmmwsrob8v0es"
 
 [node name="EnemyHurtbox" type="Area3D" parent="EnemyBody" unique_id=1592162980 groups=["Attack"]]
@@ -112,5 +120,6 @@ texture = SubResource("ViewportTexture_7tnya")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015380755, 0)
 stream = ExtResource("6_srbw4")
+bus = &"SFX"
 
 [connection signal="area_entered" from="EnemyBody/EnemyHurtbox" to="EnemyBody" method="_on_enemy_hurtbox_area_entered"]

@@ -33,3 +33,6 @@ shape = SubResource("CapsuleShape3D_5nxuk")
 
 [node name="Sprite3D" parent="EnemyBody" index="4" unique_id=478945852]
 texture = SubResource("ViewportTexture_1rm8b")
+
+[node name="EnemyHurtSFX" parent="EnemyBody" index="5" unique_id=314663720]
+bus = &"Master"

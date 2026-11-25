@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://bc0a312608lo6"]
+
+[ext_resource type="Theme" uid="uid://6kamfp5c2f81" path="res://default_theme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://d35jh4acgcmwp" path="res://ui/settings_panel.gd" id="2_script"]
+[ext_resource type="Texture2D" uid="uid://c6ubotfc17s83" path="res://ui/assets/tile_0030.png" id="3_panel_tex"]
+[ext_resource type="StyleBox" uid="uid://bvxjktmlxd6xp" path="res://ui/upgradebox_normal.tres" id="4_btn_normal"]
+[ext_resource type="StyleBox" uid="uid://csb47j7n4xoyy" path="res://ui/upgradebox_pressed.tres" id="5_btn_pressed"]
+[ext_resource type="StyleBox" uid="uid://bmtlikpa74git" path="res://ui/upgradebox_hover.tres" id="6_btn_hover"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+texture = ExtResource("3_panel_tex")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="SettingsPanel" type="Panel" unique_id=217008716]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+script = ExtResource("2_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=217008717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 36
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=217008718]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="SettingsLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=217008719]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Controls" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=217008720]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Controls" unique_id=217008721]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MasterLabel" type="Label" parent="MarginContainer/VBoxContainer/Controls/MasterRow" unique_id=217008722]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Controls/MasterRow" unique_id=217008723]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MasterValue" type="Label" parent="MarginContainer/VBoxContainer/Controls/MasterRow" unique_id=217008724]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="MusicRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Controls" unique_id=217008725]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/Controls/MusicRow" unique_id=217008726]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Controls/MusicRow" unique_id=217008727]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicValue" type="Label" parent="MarginContainer/VBoxContainer/Controls/MusicRow" unique_id=217008728]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="SFXRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Controls" unique_id=217008729]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/VBoxContainer/Controls/SFXRow" unique_id=217008730]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Controls/SFXRow" unique_id=217008731]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXValue" type="Label" parent="MarginContainer/VBoxContainer/Controls/SFXRow" unique_id=217008732]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="FullscreenCheck" type="CheckButton" parent="MarginContainer/VBoxContainer/Controls" unique_id=217008733]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=217008734]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = ExtResource("4_btn_normal")
+theme_override_styles/pressed = ExtResource("5_btn_pressed")
+theme_override_styles/hover = ExtResource("6_btn_hover")
+text = "Back"

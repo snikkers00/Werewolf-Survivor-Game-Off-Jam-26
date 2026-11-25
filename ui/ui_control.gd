@@ -22,17 +22,3 @@ func _process(_delta):
 		day_night_label.text = "Night:" + str(RunStats.days_lasted + 1)
 	elif  world_handler.is_night == false:
 		day_night_label.text = "Day:" + str(RunStats.days_lasted + 1)
-
-
-func _on_restart_button_pressed() -> void:
-	RunStats.reset_stats()
-	get_tree().paused = false
-	get_tree().reload_current_scene()
-
-
-func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://ui/title_screen.tscn")
-
-
-func _on_close_game_button_pressed() -> void:
-	get_tree().quit()

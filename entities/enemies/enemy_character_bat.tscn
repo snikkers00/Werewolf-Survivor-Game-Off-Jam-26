@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://cqotjlkg7u1kn"]
 
 [ext_resource type="Script" uid="uid://dhbuvx6eiimey" path="res://entities/enemies/enemy_body.gd" id="1_7dgpr"]
+[ext_resource type="Shader" uid="uid://nfbysywjntjc" path="res://entities/player/sprite_lighting.gdshader" id="2_a2ld8"]
 [ext_resource type="SpriteFrames" uid="uid://bh068jjb4p1wo" path="res://wold_sprite_frames.tres" id="2_sa20n"]
 [ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_a2ld8"]
 [ext_resource type="Script" uid="uid://cok7ciycaoeiq" path="res://entities/enemies/enemy_hurtbox.gd" id="4_aywd6"]
 [ext_resource type="AudioStream" uid="uid://71lwyvi2641b" path="res://entities/enemies/enemyhitrandom.tres" id="5_wineu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmiht"]
+render_priority = 0
+shader = ExtResource("2_a2ld8")
+shader_parameter/y_billboard = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b6xf8"]
 radius = 0.16210938
@@ -26,12 +32,13 @@ collision_mask = 21
 axis_lock_linear_y = true
 script = ExtResource("1_7dgpr")
 SPEED = 2.0
-enemy_damage = 1
-enemy_xp_value = 1
+enemy_damage = 2
+enemy_xp_value = 3
 
 [node name="EnemySprite" type="AnimatedSprite3D" parent="EnemyBody" unique_id=1948147315]
 unique_name_in_owner = true
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_nmiht")
 shaded = true
 double_sided = false
 alpha_cut = 2
@@ -77,5 +84,6 @@ texture = SubResource("ViewportTexture_7tnya")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015380755, 0)
 stream = ExtResource("5_wineu")
+bus = &"SFX"
 
 [connection signal="area_entered" from="EnemyBody/EnemyHurtbox" to="EnemyBody" method="_on_enemy_hurtbox_area_entered"]

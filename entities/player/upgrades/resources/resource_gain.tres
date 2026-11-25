@@ -8,6 +8,6 @@ script = ExtResource("1_eyy3n")
 name = "Maintain Control"
 description = "Gather more during the day"
 stat_modified = 4
-stat_modifier = 1.05
+stat_modifier = 1.0
 icon = ExtResource("1_4rg0d")
 metadata/_custom_type_script = "uid://diqhnlttuvp4x"

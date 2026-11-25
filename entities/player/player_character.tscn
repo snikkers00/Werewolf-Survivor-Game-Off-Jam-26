@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b581qiyy2dqp8" path="res://entities/player/player_character.gd" id="1_b5xsv"]
 [ext_resource type="Texture2D" uid="uid://q1vwfafmgblr" path="res://entities/sprites/adventurer-run-00.png" id="2_u37yl"]
 [ext_resource type="Texture2D" uid="uid://ba8uqm2prqqfv" path="res://entities/sprites/adventurer-idle-00.png" id="2_ulwpx"]
+[ext_resource type="Shader" uid="uid://nfbysywjntjc" path="res://entities/player/sprite_lighting.gdshader" id="2_ysq06"]
 [ext_resource type="Script" uid="uid://dmmwsrob8v0es" path="res://entities/health.gd" id="3_gnhdx"]
 [ext_resource type="Texture2D" uid="uid://cjeyuvu21wbq5" path="res://entities/sprites/Walk.png" id="3_taaaw"]
 [ext_resource type="Script" uid="uid://bl8fhbe1weah6" path="res://entities/player/hurt_box.gd" id="3_wepyd"]
@@ -21,6 +22,11 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6l3f"]
 radius = 0.08544922
 height = 0.26342773
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmiht"]
+render_priority = 0
+shader = ExtResource("2_ysq06")
+shader_parameter/y_billboard = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_taaaw"]
 animations = [{
@@ -166,6 +172,7 @@ shape = SubResource("CapsuleShape3D_o6l3f")
 [node name="HumanSprite" type="AnimatedSprite3D" parent="." unique_id=187975107]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18178377, 0)
+material_override = SubResource("ShaderMaterial_nmiht")
 billboard = 2
 shaded = true
 double_sided = false
@@ -178,6 +185,7 @@ frame_progress = 0.7216954
 unique_name_in_owner = true
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.18178377, 0)
 visible = false
+material_override = SubResource("ShaderMaterial_nmiht")
 billboard = 2
 shaded = true
 double_sided = false
@@ -188,7 +196,7 @@ animation = &"walk"
 frame_progress = 0.38103676
 
 [node name="CameraManager" type="Node3D" parent="." unique_id=243066430]
-transform = Transform3D(1, 0, 0, 0, 0.7660443, 0.6427875, 0, -0.6427875, 0.7660443, 0, 1.5, 1.538)
+transform = Transform3D(1, 0, 0, 0, 0.70710665, 0.70710665, 0, -0.70710665, 0.70710665, 0, 1.5, 1.538)
 
 [node name="Camera3D" type="Camera3D" parent="CameraManager" unique_id=2032683642]
 fov = 90.0
@@ -230,5 +238,6 @@ attack_sprite = ExtResource("8_taaaw")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18078136, 0)
 stream = SubResource("AudioStreamPolyphonic_uk7ad")
+bus = &"SFX"
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

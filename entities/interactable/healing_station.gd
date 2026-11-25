@@ -1,13 +1,20 @@
 extends UpgradableStructure
 
 var base_healing_tick_rate: float = 1.0
+var campfire_light : OmniLight3D
 
+func _ready() -> void:
+	super._ready()
+	if structure_model:
+		campfire_light = structure_model.get_node("CampfireLight")
 
 func level_up() -> void:
 	super.level_up()
 	if current_level > 1:
 		base_healing_tick_rate *= 1.5
-		print("healing tick rate increased to " + str(base_healing_tick_rate))
+		print("healing tick rate increased to " + str(base_healing_tick_rate))#
+		campfire_light.light_energy *= 1.5
+		campfire_light.range *= 1.5
 
 func activate_structure() -> void:
 	if current_level > 0:

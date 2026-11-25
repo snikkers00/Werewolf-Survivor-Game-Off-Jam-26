@@ -25,13 +25,21 @@ var exp_to_next_level : int
 
 @onready var introlabel : Label3D = %IntroLabel
 
+var human_base_modulate: Color
+var ww_base_modulate: Color
+var damage_tween: Tween
+
 func _ready():
 	global_position = starting_position
 	exp_to_next_level = exp_to_level1
 	health_bar.max_value = health.max_health
+	human_base_modulate = human_sprite.modulate
+	ww_base_modulate = ww_sprite.modulate
 	update_exp_ui()
 	update_health_ui()
 	human_sprite.play("idle")
+	_setup_sprite_shader(human_sprite)
+	_setup_sprite_shader(ww_sprite)
 
 	introlabelfade()
 
@@ -72,8 +80,22 @@ func _physics_process(delta):
 
 
 	move_and_slide()
+	global_position.x = clampf(global_position.x, -40.0, 40.0)
+	global_position.z = clampf(global_position.z, -40.0, 40.0)
 
 
+
+func _setup_sprite_shader(sprite: AnimatedSprite3D) -> void:
+	if sprite.material_override is ShaderMaterial:
+		sprite.material_override = sprite.material_override.duplicate()
+		sprite.frame_changed.connect(_sync_sprite_shader.bind(sprite))
+		sprite.animation_changed.connect(_sync_sprite_shader.bind(sprite))
+		_sync_sprite_shader(sprite)
+
+func _sync_sprite_shader(sprite: AnimatedSprite3D) -> void:
+	if sprite.material_override is ShaderMaterial and sprite.sprite_frames:
+		var tex := sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+		sprite.material_override.set_shader_parameter("albedo_tex", tex.atlas if tex is AtlasTexture else tex)
 
 func _on_death():
 	if lives_remaining > 0:
@@ -111,7 +133,7 @@ func level_up():
 	AudioManager.play_sound("level_up")
 	level += 1
 	current_exp -= exp_to_next_level
-	exp_to_next_level = exp_to_level1 * (level + .3)
+	exp_to_next_level = int(exp_to_level1 * (level + 0.3))
 	update_exp_ui()
 	get_tree().paused = true
 	upgrade_screen.check_and_update_upgrades()
@@ -127,7 +149,33 @@ func update_exp_ui():
 func _on_hurt_box_area_entered(area: Area3D) -> void:
 	if area.is_in_group("Attack"):
 		health.damage(area.damage)
+		flash_damage()
 		update_health_ui()
+
+func flash_damage():
+	if damage_tween:
+		damage_tween.kill()
+	var human_mat := human_sprite.material_override as ShaderMaterial
+	var ww_mat := ww_sprite.material_override as ShaderMaterial
+	if human_mat:
+		human_mat.set_shader_parameter("unshaded", 1.0)
+		human_mat.set_shader_parameter("modulate", Color(2.0, 2.0, 2.0))
+	if ww_mat:
+		ww_mat.set_shader_parameter("unshaded", 1.0)
+		ww_mat.set_shader_parameter("modulate", Color(2.0, 2.0, 2.0))
+	damage_tween = create_tween()
+	if human_mat:
+		damage_tween.tween_property(human_mat, "shader_parameter/modulate", Color(2.0, 0.3, 0.3), 0.06)
+	if ww_mat:
+		damage_tween.parallel().tween_property(ww_mat, "shader_parameter/modulate", Color(2.0, 0.3, 0.3), 0.06)
+	if human_mat:
+		damage_tween.tween_property(human_mat, "shader_parameter/modulate", human_base_modulate, 0.16)
+	if ww_mat:
+		damage_tween.parallel().tween_property(ww_mat, "shader_parameter/modulate", ww_base_modulate, 0.16)
+	if human_mat:
+		damage_tween.tween_property(human_mat, "shader_parameter/unshaded", 0.0, 0.0)
+	if ww_mat:
+		damage_tween.parallel().tween_property(ww_mat, "shader_parameter/unshaded", 0.0, 0.0)
 
 func update_health_ui():
 	health_bar.value = health.health
@@ -138,20 +186,21 @@ func update_health_ui():
 
 func apply_player_upgrade(upgrade : Upgrade):
 	if upgrade.stat_modified == Upgrade.StatModified.HEALTH:
-		
-		health.max_health *= upgrade.stat_modifier
-		health.health *= upgrade.stat_modifier
+		health.max_health *= int(upgrade.stat_modifier)
+		health.health *= int(upgrade.stat_modifier)
 		update_health_ui()
 	if upgrade.stat_modified == Upgrade.StatModified.XP_GAIN:
 		exp_rate *= upgrade.stat_modifier
 	if upgrade.stat_modified == Upgrade.StatModified.MOVEMENT_SPEED:
 		speed *= upgrade.stat_modifier
+	if upgrade.stat_modified == Upgrade.StatModified.RESOURCE_GAIN:
+		Resources.resource_rate *= upgrade.stat_modifier
 
 func respawn_player():
 	if lives_remaining == 2:
-		health.health = health.max_health * 0.5
+		health.health = int(health.max_health * 0.5)
 	elif lives_remaining == 1:
-		health.health = health.max_health * 0.25
+		health.health = int(health.max_health * 0.25)
 	update_health_ui()
 	global_position = starting_position
 	
@@ -159,6 +208,9 @@ func respawn_player():
 func introlabelfade():
 	introlabel.visible = true
 	create_tween().tween_property(introlabel, "modulate", Color.TRANSPARENT, 10)
+	create_tween().tween_property(introlabel, "outline_modulate", Color.TRANSPARENT, 10)
+	await get_tree().create_timer(10).timeout
+	introlabel.visible = false
 
 func gamefailstate():
 	lives_remaining = 0

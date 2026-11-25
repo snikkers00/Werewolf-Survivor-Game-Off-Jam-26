@@ -54,9 +54,9 @@ func reset_to_day(player_died: bool) -> void:
 
 
 func set_day_lights() -> void:
-	create_tween().tween_property(day_light, "light_energy", 1.2, 1.5)
+	create_tween().tween_property(day_light, "light_energy", 0.2, 1.5)
 	create_tween().tween_property(night_light, "light_energy", 0, 1.5)
 
 func set_night_lights() -> void:
 	create_tween().tween_property(day_light, "light_energy", 0, 1.5)
-	create_tween().tween_property(night_light, "light_energy", 0.3, 1.5)
+	create_tween().tween_property(night_light, "light_energy", 0.1, 1.5)

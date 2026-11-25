@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://duuwtppa4sqgo" path="res://entities/player/player_character.tscn" id="1_6i3v4"]
 [ext_resource type="Script" uid="uid://bv6chpy24lxdo" path="res://world/world_handler.gd" id="1_qt2dd"]
-[ext_resource type="Material" uid="uid://m4nbsceprj5w" path="res://world/base/grass_test.tres" id="2_2njat"]
 [ext_resource type="Script" uid="uid://cp7o6jhs5pvvo" path="res://ui/ui_control.gd" id="3_5aanf"]
 [ext_resource type="Script" uid="uid://dliy31kem058i" path="res://entities/enemies/enemy_spawner.gd" id="3_8qjvd"]
+[ext_resource type="Texture2D" uid="uid://dcrjy1hmrk6vf" path="res://world/base/textures/grass03.png" id="3_ehwp3"]
 [ext_resource type="PackedScene" uid="uid://c8qh1wfiplojh" path="res://world/base/scenes/rock_b.tscn" id="3_t6m8u"]
 [ext_resource type="PackedScene" uid="uid://de4m6m70ttarv" path="res://entities/interactable/upgradable_structure.tscn" id="3_tlxoi"]
 [ext_resource type="Script" uid="uid://cp1r8n8entirr" path="res://entities/interactable/crafting_station.gd" id="4_83ifp"]
@@ -43,11 +43,15 @@
 [ext_resource type="StyleBox" uid="uid://bvxjktmlxd6xp" path="res://ui/upgradebox_normal.tres" id="36_k3yes"]
 [ext_resource type="StyleBox" uid="uid://csb47j7n4xoyy" path="res://ui/upgradebox_pressed.tres" id="37_xfsdc"]
 [ext_resource type="StyleBox" uid="uid://bmtlikpa74git" path="res://ui/upgradebox_hover.tres" id="38_w4es6"]
+[ext_resource type="Script" uid="uid://dwqmhfywfyslu" path="res://world/end_panel.gd" id="44_h46o1"]
+[ext_resource type="PackedScene" uid="uid://bc0a312608lo6" path="res://ui/settings_panel.tscn" id="45_settings"]
+[ext_resource type="Script" uid="uid://wpihsecoqa13" path="res://ui/pause_menu.gd" id="46_pause"]
+[ext_resource type="Script" uid="uid://c88vxfpvibmc5" path="res://world/perimeter_fog.gd" id="47_pfog"]
+[ext_resource type="Shader" uid="uid://c8ee8t63yd1xh" path="res://world/perimeter_fog.gdshader" id="48_pfog_sh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1wpd2"]
 sky_top_color = Color(0, 0, 0, 1)
 sky_horizon_color = Color(0.18302968, 0.18743867, 0.19626617, 1)
-ground_bottom_color = Color(0.2, 0.47058824, 0.13333334, 1)
 
 [sub_resource type="Sky" id="Sky_uwmji"]
 sky_material = SubResource("ProceduralSkyMaterial_1wpd2")
@@ -56,26 +60,20 @@ sky_material = SubResource("ProceduralSkyMaterial_1wpd2")
 background_mode = 2
 background_color = Color(0.99243873, 0.7950196, 0.8058209, 1)
 sky = SubResource("Sky_uwmji")
+ambient_light_color = Color(0.051970966, 0.05197096, 0.05197095, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.2
 fog_enabled = true
 fog_light_color = Color(0.49411765, 0.5529412, 0.60784316, 1)
 fog_light_energy = 0.7
-fog_sun_scatter = 0.5
-fog_aerial_perspective = 0.5
-fog_height_density = 1.0
+fog_sun_scatter = 0.1
+fog_density = 0.025
+fog_depth_curve = 0.40612686
+fog_depth_begin = 0.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_4pufg"]
 
 [sub_resource type="Compositor" id="Compositor_5aanf"]
-
-[sub_resource type="Animation" id="Animation_r47v5"]
-length = 0.001
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Marker3D/DayLight")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_q1dqp"]
 resource_name = "sunandmoonrotation"
@@ -85,37 +83,28 @@ tracks/0/enabled = true
 tracks/0/path = NodePath("Marker3D")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0.707107, 0.707107, 0.5, 1, 0, 0, 0, 1, 1, 1, 0, 0, -0.707107, 0.707107)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0.642788, 0.766044, 0.5, 1, 0, 0, 0, 1, 1, 1, 0, 0, -0.642788, 0.766044)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r47v5"]
 _data = {
-&"RESET": SubResource("Animation_r47v5"),
 &"sunandmoonrotation": SubResource("Animation_q1dqp")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sb31h"]
+albedo_texture = ExtResource("3_ehwp3")
+uv1_scale = Vector3(80, 80, 80)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_o6l3f"]
-size = Vector2(100, 100)
+material = SubResource("StandardMaterial3D_sb31h")
+size = Vector2(140, 140)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_uk7ad"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_toecx"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jqoxc"]
 resource_local_to_scene = true
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_h46o1"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sb31h"]
 resource_local_to_scene = true
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_3x1dl"]
-resource_local_to_scene = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1uymw"]
-transparency = 1
-albedo_color = Color(1, 0, 0, 0.19607843)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ob7fg"]
-material = SubResource("StandardMaterial3D_1uymw")
-top_radius = 1.0
-bottom_radius = 1.0
-height = 1.025
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xfsdc"]
 texture = ExtResource("25_w4es6")
@@ -139,7 +128,7 @@ font_size = 30
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6l3f"]
 texture = ExtResource("26_toecx")
-modulate_color = Color(0.85814106, 0.85814106, 0.85814106, 1)
+modulate_color = Color(0, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toecx"]
 bg_color = Color(1, 1, 1, 0.2)
@@ -147,8 +136,14 @@ border_width_top = 2
 border_width_bottom = 2
 border_color = Color(0.8001019, 0.8001019, 0.8001019, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsju0"]
-bg_color = Color(0.6745098, 0, 0, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_il0i8"]
+texture = ExtResource("26_toecx")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_il0i8"]
+bg_color = Color(1, 1, 1, 0.2)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.8001019, 0.8001019, 0.8001019, 0)
 
 [sub_resource type="FontVariation" id="FontVariation_toecx"]
 base_font = ExtResource("12_1uymw")
@@ -158,6 +153,16 @@ spacing_glyph = 1
 [sub_resource type="LabelSettings" id="LabelSettings_toecx"]
 font = SubResource("FontVariation_toecx")
 font_size = 24
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3x1dl"]
+texture = ExtResource("25_ob7fg")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="MainWorld" type="Node3D" unique_id=514236664]
 
@@ -173,24 +178,26 @@ camera_attributes = SubResource("CameraAttributesPractical_4pufg")
 compositor = SubResource("Compositor_5aanf")
 
 [node name="Marker3D" type="Marker3D" parent="WorldHandler/WorldEnvironment" unique_id=1903453653]
-transform = Transform3D(-4.3711392e-08, 1.0000001, 0, -1.0000001, -4.3711392e-08, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.9995869, 0.0287399, 0, -0.0287399, 0.9995869, 0, 0, 0, 1, 0, 0, 0)
 rotation_edit_mode = 1
 top_level = true
 
 [node name="DayLight" type="DirectionalLight3D" parent="WorldHandler/WorldEnvironment/Marker3D" unique_id=1344324537]
 unique_name_in_owner = true
-transform = Transform3D(0.9999999, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -1.4901161e-08, 5.7505054, 7.2648373)
-light_color = Color(1, 0.48235294, 0.4745098, 1)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.258819, 0.96592563, 0, -0.96592563, 0.258819, -1.4901161e-08, 5.7505054, 7.2648373)
+light_color = Color(0.8773585, 0.3852115, 0, 1)
+light_energy = 0.2
 shadow_enabled = true
+shadow_opacity = 0.9
 
 [node name="NightLight" type="DirectionalLight3D" parent="WorldHandler/WorldEnvironment/Marker3D" unique_id=498538066]
 unique_name_in_owner = true
 transform = Transform3D(0.9999999, 0, 0, 0, 0.25881904, 0.9659257, 0, -0.9659257, 0.25881904, 0, 5.7505045, 7.2648373)
 light_color = Color(0.19607843, 0.46666667, 1, 1)
-light_energy = 0.3
+light_energy = 0.1
+light_negative = true
 shadow_enabled = true
 shadow_opacity = 0.9
-shadow_blur = 2.0
 
 [node name="NightCycleAnimationPlayer" type="AnimationPlayer" parent="WorldHandler/WorldEnvironment/Marker3D" unique_id=1296270861]
 unique_name_in_owner = true
@@ -204,11 +211,15 @@ one_shot = true
 [node name="WorldGround" type="StaticBody3D" parent="." unique_id=322917489]
 
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldGround" unique_id=1616564084]
+cast_shadow = 0
 mesh = SubResource("PlaneMesh_o6l3f")
-surface_material_override/0 = ExtResource("2_2njat")
 
 [node name="WorldCollision" type="CollisionShape3D" parent="WorldGround" unique_id=1549030858]
 shape = SubResource("WorldBoundaryShape3D_uk7ad")
+
+[node name="PerimeterFog" type="Node3D" parent="." unique_id=912337276]
+script = ExtResource("47_pfog")
+fog_shader = ExtResource("48_pfog_sh")
 
 [node name="HomeBase" type="Node3D" parent="." unique_id=1859075692]
 
@@ -224,7 +235,7 @@ upgrade_cost_wood = 0
 upgrade_cost_stone = 3
 
 [node name="InteractionCollision" parent="HomeBase/Crafting/InteractionArea" parent_id_path=PackedInt32Array(1764510604, 23553612) index="0" unique_id=785179818]
-shape = SubResource("CylinderShape3D_toecx")
+shape = SubResource("CylinderShape3D_jqoxc")
 
 [node name="Base" parent="HomeBase" unique_id=311782980 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.411, 0.01, -1.583)
@@ -233,7 +244,7 @@ base_exp_tick_rate = 1.0
 structure_model_scene = ExtResource("5_q1dqp")
 
 [node name="InteractionCollision" parent="HomeBase/Base/InteractionArea" parent_id_path=PackedInt32Array(311782980, 23553612) index="0" unique_id=785179818]
-shape = SubResource("CylinderShape3D_h46o1")
+shape = SubResource("CylinderShape3D_sb31h")
 
 [node name="HealingStation" parent="HomeBase" unique_id=2064620942 instance=ExtResource("3_tlxoi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.222)
@@ -244,12 +255,6 @@ cost_type = 0
 starting_level = 0
 current_level = 0
 upgrade_cost_stone = 0
-
-[node name="InteractionCollision" parent="HomeBase/HealingStation/InteractionArea" parent_id_path=PackedInt32Array(2064620942, 23553612) index="0" unique_id=785179818]
-shape = SubResource("CylinderShape3D_3x1dl")
-
-[node name="ActivationVisual" parent="HomeBase/HealingStation/ActivationArea" parent_id_path=PackedInt32Array(2064620942, 222908699) index="1" unique_id=324995240]
-mesh = SubResource("CylinderMesh_ob7fg")
 
 [node name="rock-b" parent="HomeBase" unique_id=808174205 instance=ExtResource("3_t6m8u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2482028, 0, -1.4408872)
@@ -270,6 +275,9 @@ health = 25
 [node name="Slash" parent="Entities/PlayerCharacter/AttackManager" parent_id_path=PackedInt32Array(1825023238, 405674200) index="0" unique_id=1363159713]
 attack_name = ""
 
+[node name="PlayerSFX" parent="Entities/PlayerCharacter" index="7" unique_id=880093235]
+bus = &"Master"
+
 [node name="IntroLabel" type="Label3D" parent="Entities/PlayerCharacter" unique_id=1686863322]
 unique_name_in_owner = true
 transform = Transform3D(0.83333313, 0, 0, 0, 0.83333313, 0, 0, 0, 0.83333313, 0, 1.1981943, 0)
@@ -284,11 +292,11 @@ boss_scene = ExtResource("13_q1dqp")
 
 [node name="EnemySpawnTimer" type="Timer" parent="Entities/EnemySpawner" unique_id=179378876]
 unique_name_in_owner = true
-wait_time = 0.5
+wait_time = 0.75
 
 [node name="BossSpawnMarker" type="Marker3D" parent="Entities/EnemySpawner" unique_id=711483073]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04113853, 0.7067225, -6.953488)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04113853, 0.032844186, -6.953488)
 
 [node name="Environment" type="Node3D" parent="." unique_id=746039394]
 
@@ -6588,10 +6596,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 transform = Transform3D(0.98249805, 0, 0.18627289, 0, 1, 0, -0.18627289, 0, 0.98249805, -1.8079231, 0, -35.48824)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
-[node name="grass (1474)" parent="Environment" unique_id=1084139917 instance=ExtResource("17_82ik7")]
-transform = Transform3D(-0.74893224, 0, 0.66264653, 0, 1, 0, -0.66264653, 0, -0.74893224, 2.5547402, 0, 0.29839706)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
 [node name="grass (1475)" parent="Environment" unique_id=1321933088 instance=ExtResource("17_82ik7")]
 transform = Transform3D(0.7578471, 0, 0.6524322, 0, 1, 0, -0.6524322, 0, 0.7578471, -6.5164537, 0, -5.9302816)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
@@ -6697,7 +6701,7 @@ transform = Transform3D(0.1926375, 0, 0.98127, 0, 1, 0, -0.98127, 0, 0.1926375, 
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1501)" parent="Environment" unique_id=65920565 instance=ExtResource("17_82ik7")]
-transform = Transform3D(-0.32799873, 0, 0.9446782, 0, 1, 0, -0.9446782, 0, -0.32799873, -0.88175356, 0, 1.5798664)
+transform = Transform3D(-0.32799873, 0, 0.9446782, 0, 1, 0, -0.9446782, 0, -0.32799873, 1.3127275, 0, -3.5075984)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1502)" parent="Environment" unique_id=1225744474 instance=ExtResource("17_82ik7")]
@@ -6862,10 +6866,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1542)" parent="Environment" unique_id=1640867841 instance=ExtResource("17_82ik7")]
 transform = Transform3D(-0.6796228, 0, 0.73356175, 0, 1, 0, -0.73356175, 0, -0.6796228, 6.771887, 0, -15.076092)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
-[node name="grass (1543)" parent="Environment" unique_id=1457466963 instance=ExtResource("17_82ik7")]
-transform = Transform3D(0.9814544, 0, 0.19169588, 0, 1, 0, -0.19169588, 0, 0.9814544, -0.213964, 0, -1.9626179)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1544)" parent="Environment" unique_id=1963705624 instance=ExtResource("17_82ik7")]
@@ -7196,10 +7196,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 transform = Transform3D(-0.9047245, 0, 0.42599726, 0, 1, 0, -0.42599726, 0, -0.9047245, -18.7824, 0, -12.513575)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
-[node name="grass (1626)" parent="Environment" unique_id=658431554 instance=ExtResource("17_82ik7")]
-transform = Transform3D(0.61835897, 0, 0.78589576, 0, 1, 0, -0.78589576, 0, 0.61835897, -1.1578763, 0, -2.0515614)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
 [node name="grass (1627)" parent="Environment" unique_id=1990900132 instance=ExtResource("17_82ik7")]
 transform = Transform3D(0.75006837, 0, 0.6613603, 0, 1, 0, -0.6613603, 0, 0.75006837, -12.937614, 0, -9.764136)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
@@ -7446,10 +7442,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1688)" parent="Environment" unique_id=464134926 instance=ExtResource("17_82ik7")]
 transform = Transform3D(0.34423003, 0, 0.93888533, 0, 1, 0, -0.93888533, 0, 0.34423003, -0.37133884, 0, -22.870472)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
-[node name="grass (1689)" parent="Environment" unique_id=1269877816 instance=ExtResource("17_82ik7")]
-transform = Transform3D(-0.043328468, 0, 0.99906087, 0, 1, 0, -0.99906087, 0, -0.043328468, 1.6747316, 0, -0.2799759)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1690)" parent="Environment" unique_id=1249881053 instance=ExtResource("17_82ik7")]
@@ -7729,7 +7721,7 @@ transform = Transform3D(-0.74722403, 0, 0.66457224, 0, 1, 0, -0.66457224, 0, -0.
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1760)" parent="Environment" unique_id=601260510 instance=ExtResource("17_82ik7")]
-transform = Transform3D(-0.31549123, 0, 0.9489285, 0, 1, 0, -0.9489285, 0, -0.31549123, -0.06436485, 0, 1.8496389)
+transform = Transform3D(-0.31549123, 0, 0.9489285, 0, 1, 0, -0.9489285, 0, -0.31549123, -2.4819741, 0, 1.8496389)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1761)" parent="Environment" unique_id=86686713 instance=ExtResource("17_82ik7")]
@@ -7858,10 +7850,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1792)" parent="Environment" unique_id=633362190 instance=ExtResource("17_82ik7")]
 transform = Transform3D(0.9967263, 0, 0.08085024, 0, 1, 0, -0.08085024, 0, 0.9967263, -8.266892, 0, 29.095787)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
-[node name="grass (1793)" parent="Environment" unique_id=514068519 instance=ExtResource("17_82ik7")]
-transform = Transform3D(0.11874908, 0, 0.9929243, 0, 1, 0, -0.9929243, 0, 0.11874908, 2.0935845, 0, -0.9345064)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1794)" parent="Environment" unique_id=114462682 instance=ExtResource("17_82ik7")]
@@ -7998,10 +7986,6 @@ metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1827)" parent="Environment" unique_id=272555254 instance=ExtResource("17_82ik7")]
 transform = Transform3D(0.97619945, 0, 0.21687472, 0, 1, 0, -0.21687472, 0, 0.97619945, -4.2094464, 0, 13.865235)
-metadata/asset_placer_res_id = "uid://eiygpipls6re"
-
-[node name="grass (1828)" parent="Environment" unique_id=401810811 instance=ExtResource("17_82ik7")]
-transform = Transform3D(-0.55599535, 0, 0.8311854, 0, 1, 0, -0.8311854, 0, -0.55599535, -0.28178868, 0, 9.346008e-05)
 metadata/asset_placer_res_id = "uid://eiygpipls6re"
 
 [node name="grass (1829)" parent="Environment" unique_id=1031245205 instance=ExtResource("17_82ik7")]
@@ -12722,6 +12706,7 @@ horizontal_alignment = 1
 
 [node name="ExpBar" type="ProgressBar" parent="UILayer/UIControl" unique_id=1785982555]
 unique_name_in_owner = true
+modulate = Color(0.7373294, 0.7373294, 0.7373294, 1)
 custom_minimum_size = Vector2(1000, 20)
 custom_maximum_size = Vector2(1000, 20)
 layout_mode = 1
@@ -12745,36 +12730,74 @@ step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="LevelLabel" type="Label" parent="UILayer/UIControl/ExpBar" unique_id=646275091]
-unique_name_in_owner = true
+[node name="ExpLeftEnd" type="TextureRect" parent="UILayer/UIControl/ExpBar" unique_id=1261811880]
+modulate = Color(0, 1, 1, 1)
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -496.0
-offset_top = -26.0
-offset_right = -427.0
-offset_bottom = -2.0
-grow_horizontal = 2
-theme = ExtResource("21_83ifp")
-text = "Level 1"
-horizontal_alignment = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_vertical = 2
+texture = ExtResource("27_h46o1")
+
+[node name="ExpRightEnd" type="TextureRect" parent="UILayer/UIControl/ExpBar" unique_id=935327959]
+modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("28_3x1dl")
 
 [node name="PlayerHealthBar" type="ProgressBar" parent="UILayer/UIControl" unique_id=204625390]
 unique_name_in_owner = true
+modulate = Color(0.7373294, 0.7373294, 0.7373294, 1)
 layout_mode = 0
 offset_left = 525.0
 offset_top = 581.0
 offset_right = 625.0
 offset_bottom = 608.0
 theme = ExtResource("21_83ifp")
-theme_override_styles/fill = SubResource("StyleBoxFlat_rsju0")
+theme_override_styles/background = SubResource("StyleBoxTexture_il0i8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_il0i8")
 max_value = 50.0
 step = 1.0
 rounded = true
 show_percentage = false
 
-[node name="HealthLabel" type="Label" parent="UILayer/UIControl/PlayerHealthBar" unique_id=6857664]
+[node name="healthLeftEnd" type="TextureRect" parent="UILayer/UIControl/PlayerHealthBar" unique_id=736493088]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -2.5
+offset_bottom = 2.5
+grow_vertical = 2
+texture = ExtResource("27_h46o1")
+
+[node name="healthRightEnd" type="TextureRect" parent="UILayer/UIControl/PlayerHealthBar" unique_id=1839248468]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("28_3x1dl")
+
+[node name="HealthLabel" type="Label" parent="UILayer/UIControl" unique_id=6857664]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -12782,17 +12805,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -27.0
+offset_top = 238.0
+offset_right = 25.0
+offset_bottom = 262.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("21_83ifp")
 text = "10/10"
 horizontal_alignment = 1
 
-[node name="LivesLabel" type="Label" parent="UILayer/UIControl/PlayerHealthBar" unique_id=631428979]
+[node name="LivesLabel" type="Label" parent="UILayer/UIControl" unique_id=631428979]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
@@ -12800,31 +12823,31 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -52.0
-offset_right = 100.0
-offset_bottom = -25.0
+offset_left = 278.0
+offset_top = -57.0
+offset_right = 478.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("21_83ifp")
-horizontal_alignment = 1
+text = "Lives Remaining: "
+horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Tile0056" type="TextureRect" parent="UILayer/UIControl" unique_id=1261811880]
-layout_mode = 0
-offset_left = 44.0
-offset_top = 610.0
-offset_right = 76.0
-offset_bottom = 642.0
-texture = ExtResource("27_h46o1")
-
-[node name="Tile0057" type="TextureRect" parent="UILayer/UIControl" unique_id=935327959]
-layout_mode = 0
-offset_left = 1076.0
-offset_top = 610.0
-offset_right = 1108.0
-offset_bottom = 642.0
-texture = ExtResource("28_3x1dl")
+[node name="LevelLabel" type="Label" parent="UILayer/UIControl" unique_id=646275091]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -496.0
+offset_top = 590.0
+offset_right = -427.0
+offset_bottom = 614.0
+grow_horizontal = 2
+theme = ExtResource("21_83ifp")
+text = "Level 1"
+horizontal_alignment = 1
 
 [node name="PanelContainer" type="NinePatchRect" parent="UILayer" unique_id=985221576]
 custom_minimum_size = Vector2(160, 55)
@@ -13080,12 +13103,12 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="DeathScreen" type="CanvasLayer" parent="." unique_id=329103570]
+[node name="EndScreen" type="CanvasLayer" parent="." unique_id=329103570]
 unique_name_in_owner = true
 process_mode = 2
 layer = 50
 
-[node name="DeathPanel" type="Panel" parent="DeathScreen" unique_id=1492868869]
+[node name="EndPanel" type="Panel" parent="EndScreen" unique_id=1492868869]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 8
@@ -13100,8 +13123,11 @@ offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("21_83ifp")
+theme_override_styles/panel = SubResource("StyleBoxTexture_3x1dl")
+script = ExtResource("44_h46o1")
 
-[node name="DeathLabel" type="Label" parent="DeathScreen/DeathPanel" unique_id=206715062]
+[node name="EndLabel" type="Label" parent="EndScreen/EndPanel" unique_id=206715062]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -13119,7 +13145,7 @@ theme_override_font_sizes/font_size = 32
 text = "You Died! :("
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DeathScreen/DeathPanel" unique_id=1251077435]
+[node name="HBoxContainer" type="HBoxContainer" parent="EndScreen/EndPanel" unique_id=1251077435]
 custom_minimum_size = Vector2(600, 40)
 layout_mode = 1
 anchors_preset = 8
@@ -13137,26 +13163,36 @@ theme = ExtResource("21_83ifp")
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="RestartButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=107545002]
+[node name="RestartButton" type="Button" parent="EndScreen/EndPanel/HBoxContainer" unique_id=107545002]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 text = "Restart?"
 
-[node name="MainMenuButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=427750914]
+[node name="MainMenuButton" type="Button" parent="EndScreen/EndPanel/HBoxContainer" unique_id=427750914]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 text = "Main Menu?"
 
-[node name="CloseGameButton" type="Button" parent="DeathScreen/DeathPanel/HBoxContainer" unique_id=1299562945]
+[node name="CloseGameButton" type="Button" parent="EndScreen/EndPanel/HBoxContainer" unique_id=1299562945]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme = ExtResource("21_83ifp")
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 text = "Close Game?
 "
 
-[node name="StatsLabel" type="RichTextLabel" parent="DeathScreen/DeathPanel" unique_id=1198153227]
+[node name="StatsLabel" type="RichTextLabel" parent="EndScreen/EndPanel" unique_id=1198153227]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 1
 anchors_preset = 8
@@ -13179,8 +13215,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=351953441]
-process_mode = 2
+process_mode = 3
 layer = 100
+script = ExtResource("46_pause")
 
 [node name="PanelPanel" type="Panel" parent="PauseMenu" unique_id=774016345]
 unique_name_in_owner = true
@@ -13196,6 +13233,8 @@ offset_right = 400.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("21_83ifp")
+theme_override_styles/panel = SubResource("StyleBoxTexture_3x1dl")
 
 [node name="PauseLabel" type="Label" parent="PauseMenu/PanelPanel" unique_id=28937220]
 layout_mode = 1
@@ -13204,47 +13243,104 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = -101.0
-offset_right = 43.5
-offset_bottom = -78.0
+offset_left = -120.0
+offset_top = -190.0
+offset_right = 120.0
+offset_bottom = -145.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 40
 text = "You Paused!"
 horizontal_alignment = 1
 
+[node name="MenuButtons" type="VBoxContainer" parent="PauseMenu/PanelPanel" unique_id=822497809]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -85.0
+offset_right = 110.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/PanelPanel/MenuButtons" unique_id=822497811]
+custom_minimum_size = Vector2(220, 48)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="PauseMenu/PanelPanel/MenuButtons" unique_id=822497812]
+custom_minimum_size = Vector2(220, 48)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
+text = "Settings"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu/PanelPanel" unique_id=822497810]
 custom_minimum_size = Vector2(600, 40)
-layout_mode = 0
-offset_left = 90.0
-offset_top = 365.0
-offset_right = 690.0
-offset_bottom = 405.0
-theme_override_constants/separation = 50
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = 125.0
+offset_right = 330.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
 alignment = 1
 
 [node name="RestartButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=336072960]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 text = "Restart?"
 
 [node name="MainMenuButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=845473692]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
 text = "Main Menu?"
 
 [node name="CloseGameButton" type="Button" parent="PauseMenu/PanelPanel/HBoxContainer" unique_id=1850932769]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "Close Game?
-"
+theme_override_styles/normal = ExtResource("36_k3yes")
+theme_override_styles/pressed = ExtResource("37_xfsdc")
+theme_override_styles/hover = ExtResource("38_w4es6")
+text = "Close Game?"
+
+[node name="SettingsPanel" parent="PauseMenu" unique_id=774016350 instance=ExtResource("45_settings")]
 
 [connection signal="timeout" from="WorldHandler/Day_NightTimer" to="WorldHandler" method="_on_timer_timeout"]
 [connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton1" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_1_pressed"]
 [connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton2" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_2_pressed"]
 [connection signal="pressed" from="LevelUpLayer/UpgradeUI/Upgrades/UpgradeButton3" to="LevelUpLayer/UpgradeUI" method="_on_upgrade_button_3_pressed"]
+[connection signal="pressed" from="EndScreen/EndPanel/HBoxContainer/RestartButton" to="EndScreen/EndPanel" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="EndScreen/EndPanel/HBoxContainer/MainMenuButton" to="EndScreen/EndPanel" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="EndScreen/EndPanel/HBoxContainer/CloseGameButton" to="EndScreen/EndPanel" method="_on_close_game_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelPanel/MenuButtons/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelPanel/MenuButtons/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelPanel/HBoxContainer/RestartButton" to="PauseMenu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelPanel/HBoxContainer/MainMenuButton" to="PauseMenu" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenu/PanelPanel/HBoxContainer/CloseGameButton" to="PauseMenu" method="_on_close_game_button_pressed"]
 
 [editable path="HomeBase/Crafting"]
 [editable path="HomeBase/Base"]
-[editable path="HomeBase/HealingStation"]
 [editable path="Entities/PlayerCharacter"]
