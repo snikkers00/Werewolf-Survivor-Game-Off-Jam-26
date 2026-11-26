@@ -26,7 +26,7 @@ func spawn_enemy():
 	var spawn_angle = randf_range(0, TAU)
 	var x_offset = cos(spawn_angle) * spawn_distance
 	var y_offset = sin(spawn_angle) * spawn_distance
-	var spawn_pos : Vector3 = Vector3((player_postion.x + x_offset) , 0 , (player_postion.y + y_offset) )
+	var spawn_pos : Vector3 = Vector3((player_postion.x + x_offset) , 0 , (player_postion.z + y_offset) )
 	var enemy_picked = enemy_types.pick_random()
 	var enemy_to_spawn = enemy_picked.instantiate()
 	add_child(enemy_to_spawn)

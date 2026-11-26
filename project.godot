@@ -13,9 +13,11 @@ config_version=5
 config/name="Werewolf Survivor"
 config/description="Gather and research during the day, defend yourself by night."
 config/version="0.1.7"
-run/main_scene="uid://b4hokgkltdlyf"
+run/main_scene="uid://berdtmyw5rs1o"
+run/disable_stdout=true
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://bsmyj3vdewi13"
+run/disable_stdout.release=true
 
 [audio]
 
@@ -28,6 +30,7 @@ EventsBus="*uid://bq7mrlsy3sbl7"
 Resources="*uid://bplfkhpnhx0mx"
 RunStats="*uid://cly0rh6dt8xud"
 AudioManager="*uid://boi3b26dymcxd"
+ButtonJuice="*res://autoloads/button_juice.gd"
 
 [display]
 

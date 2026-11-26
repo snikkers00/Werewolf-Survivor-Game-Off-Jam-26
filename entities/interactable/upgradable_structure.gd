@@ -47,33 +47,17 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and structure_interact_label.visible == true:
-		level_up()
+		attempt_level_up()
 
 
-func level_up() -> void:
-	if cost_type == structure_cost_type.WOOD:
-		if Resources.check_spend_resource_success(Resources.ResourceType.WOOD, upgrade_cost_wood) == true:
-			upgrade()
-			print("Upgraded " + structure_name + " to level " + str(current_level))
-			update_structure_label()
-		elif Resources.check_spend_resource_success(Resources.ResourceType.WOOD, upgrade_cost_wood) == false:
-			print("Not enough wood to upgrade " + structure_name)
-			
-	elif cost_type == structure_cost_type.STONE:
-		if Resources.check_spend_resource_success(Resources.ResourceType.STONE, upgrade_cost_stone) == true:
-			upgrade()
-			print("Upgraded " + structure_name + " to level " + str(current_level))
-			update_structure_label()
-		elif Resources.check_spend_resource_success(Resources.ResourceType.STONE, upgrade_cost_stone) == false:
-			print("Not enough stone to upgrade " + structure_name)
-			
-	elif cost_type == structure_cost_type.WOOD_AND_STONE:
-		if Resources.check_spend_resource_success(Resources.ResourceType.WOOD, upgrade_cost_wood) == true and Resources.check_spend_resource_success(Resources.ResourceType.STONE, upgrade_cost_stone) == true:
-			upgrade()
-			print("Upgraded " + structure_name + " to level " + str(current_level))
-			update_structure_label()
-		elif Resources.check_spend_resource_success(Resources.ResourceType.WOOD, upgrade_cost_wood) == false or Resources.check_spend_resource_success(Resources.ResourceType.STONE, upgrade_cost_stone) == false:
-			print("Not enough resources to upgrade " + structure_name)
+func attempt_level_up() -> void:
+	if unavailable:
+		return
+	var wood := upgrade_cost_wood if cost_type != structure_cost_type.STONE else 0
+	var stone := upgrade_cost_stone if cost_type != structure_cost_type.WOOD else 0
+	if Resources.try_spend(wood, stone):
+		successful_upgrade()
+		update_structure_label()
 
 
 func _on_interaction_area_body_entered(body: Node3D) -> void:
@@ -87,7 +71,7 @@ func _on_interaction_area_body_exited(body: Node3D) -> void:
 	if body.is_in_group("Player"):
 		structure_interact_label.visible = false
 
-func upgrade() -> void:
+func successful_upgrade() -> void:
 	AudioManager.play_sound("spend_resource")
 	current_level += 1
 	if current_level == 1 and structure_model:
@@ -105,7 +89,6 @@ func update_structure_label() -> void:
 		structure_interact_label.text = (structure_name + " Locked")
 	else:
 		structure_interact_label.text = (structure_name + " Level: " + str(current_level) + "\nCost: " + str(upgrade_cost_wood) + " Wood, " + str(upgrade_cost_stone) + " Stone")
-		structure_interact_label.text += "\nPress E to upgrade " + structure_name + " to Level " + str(current_level + 1)
 
 
 func _on_activation_timer_timeout() -> void:

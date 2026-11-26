@@ -12,6 +12,13 @@ var resource_rate : float = 1.0
 var current_wood : int
 var current_stone : int
 
+func reset_resources() -> void:
+	current_wood = 0
+	current_stone = 0
+	resource_rate = 1.0
+	update_resource_ui()
+
+
 func gain_resource(resource_type : ResourceType, amount : int) -> void:
 	if resource_type == ResourceType.WOOD:
 		current_wood += amount * resource_rate
@@ -27,28 +34,16 @@ func gain_resource(resource_type : ResourceType, amount : int) -> void:
 		
 
 func update_resource_ui() -> void:
-	wood_label.text = ": " + str(current_wood)
-	stone_label.text = ": " + str(current_stone)
+	if wood_label:
+		wood_label.text = ": " + str(current_wood)
+	if stone_label:
+		stone_label.text = ": " + str(current_stone)
 
 
-func check_spend_resource_success(resource_type : ResourceType, amount : int) -> bool:
-	if resource_type == ResourceType.WOOD:
-		if current_wood >= amount:
-			current_wood -= amount
-			update_resource_ui()
-			return true
-		else:
-			print("Not enough wood")
-			return false
-			
-	elif resource_type == ResourceType.STONE:
-		if current_stone >= amount:
-			current_stone -= amount
-			update_resource_ui()
-			return true
-		else:
-			print("Not enough stone")
-			return false
-	else:
-		print("Invalid resource types submitted")
+func try_spend(wood: int, stone: int) -> bool:
+	if current_wood < wood or current_stone < stone:
 		return false
+	current_wood -= wood
+	current_stone -= stone
+	update_resource_ui()
+	return true

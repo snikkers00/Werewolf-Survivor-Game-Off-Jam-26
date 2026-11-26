@@ -7,15 +7,21 @@ extends Panel
 func _ready() -> void:
 	EventsBus.boss_defeated.connect(_on_game_win)
 
-func _on_game_win():
+func _on_game_win(win: bool):
 	get_tree().paused = true
-	endlabel.text = "You Win!"
+	if win:
+		endlabel.text = "You Win!"
+	else:
+		endlabel.text = "Game Over"
 	stats_label.text = "Days Lasted: " + str(RunStats.days_lasted) + "\n" + "Resources Gathered: " + str(RunStats.resources_gathered) + "\n" + "Knowledge Gained: " + str(RunStats.total_exp_gained) + "\n" + "Enemies Killed: " + str(RunStats.enemies_killed)
 	visible = true
 
 
 
 func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
+	RunStats.reset_stats()
+	Resources.reset_resources()
 	get_tree().reload_current_scene()
 
 

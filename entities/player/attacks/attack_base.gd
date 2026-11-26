@@ -40,14 +40,14 @@ func _on_attack_timer_timeout():
 		collision.disabled = false
 		sprite.visible = true
 		
-		var fade = create_tween()
-		fade.tween_property(sprite, "modulate:a", 0.0 , 0.2)
-		await fade.finished
-
-		disable_attack()
+		var fade_tween: Tween
+		if fade_tween:
+			fade_tween.kill()
+		fade_tween = create_tween()
+		fade_tween.tween_property(sprite, "modulate:a", 0.0, 0.2)
+		fade_tween.tween_callback(disable_attack)
 	
 func disable_attack():
-	
 	collision.disabled = true
 	sprite.visible = false
 	

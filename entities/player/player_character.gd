@@ -9,7 +9,7 @@ extends CharacterBody3D
 @onready var health_label : Label = %HealthLabel
 @onready var lives_label : Label = %LivesLabel
 
-@onready var death_screen : Panel = %DeathPanel
+@onready var end_screen : Panel = %EndPanel
 @onready var upgrade_screen : Control = %UpgradeUI
 
 var starting_position : Vector3
@@ -30,7 +30,7 @@ var ww_base_modulate: Color
 var damage_tween: Tween
 
 func _ready():
-	global_position = starting_position
+	starting_position = global_position
 	exp_to_next_level = exp_to_level1
 	health_bar.max_value = health.max_health
 	human_base_modulate = human_sprite.modulate
@@ -101,13 +101,12 @@ func _on_death():
 	if lives_remaining > 0:
 		lives_remaining -= 1
 		EventsBus.reset_to_day.emit(true)
-		respawn_player()
-		health.health = health.max_health
+		respawn_player(starting_position)
 		update_health_ui()
 	else:
 		print("Player has died (for good)")
 		get_tree().paused = true
-		death_screen.visible = true
+		end_screen.on_game_win(false)
 
 func shapeshift(is_night):
 	if is_night == true:
@@ -123,7 +122,7 @@ func shapeshift(is_night):
 func gain_exp(amount):
 	current_exp += amount * exp_rate
 	exp_bar.value += amount * exp_rate
-	while current_exp >= exp_to_next_level:
+	if current_exp >= exp_to_next_level:
 		if get_tree().paused == false:
 			level_up()
 	RunStats.total_exp_gained += amount * exp_rate
@@ -186,21 +185,23 @@ func update_health_ui():
 
 func apply_player_upgrade(upgrade : Upgrade):
 	if upgrade.stat_modified == Upgrade.StatModified.HEALTH:
-		health.max_health *= int(upgrade.stat_modifier)
-		health.health *= int(upgrade.stat_modifier)
+		health.max_health *= upgrade.stat_modifier
+		health.health *= upgrade.stat_modifier
 		update_health_ui()
 	if upgrade.stat_modified == Upgrade.StatModified.XP_GAIN:
 		exp_rate *= upgrade.stat_modifier
 	if upgrade.stat_modified == Upgrade.StatModified.MOVEMENT_SPEED:
 		speed *= upgrade.stat_modifier
 	if upgrade.stat_modified == Upgrade.StatModified.RESOURCE_GAIN:
-		Resources.resource_rate *= upgrade.stat_modifier
+		Resources.resource_rate += upgrade.stat_modifier
 
-func respawn_player():
+func respawn_player(starting_position: Vector3):
 	if lives_remaining == 2:
 		health.health = int(health.max_health * 0.5)
 	elif lives_remaining == 1:
 		health.health = int(health.max_health * 0.25)
+	else:
+		return
 	update_health_ui()
 	global_position = starting_position
 	

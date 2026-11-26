@@ -9,15 +9,16 @@ extends CharacterBody3D
 @onready var health_comp = $Health
 
 @export var is_boss: bool = false
-
 @onready var enemy_hurt_player : AudioStreamPlayer3D = %EnemyHurtSFX
 
+var player: Node3D
 var knockback_velocity: Vector3 = Vector3.ZERO
 var base_modulate: Color
 var damage_tween: Tween
 
 func _ready():
 	health_comp.death.connect(die)
+	player = get_tree().get_first_node_in_group("Player")
 	#health_bar.max_value = health_comp.health
 	#health_bar.value = health_comp.health
 	base_modulate = enemysprite.modulate
@@ -42,7 +43,7 @@ func _sync_sprite_shader(sprite: AnimatedSprite3D) -> void:
 func _physics_process(_delta):
 	if not is_on_floor():
 		velocity += get_gravity() * _delta
-	var player_postion: Vector3 = get_tree().get_first_node_in_group("Player").global_position
+	var player_postion: Vector3 = player.global_position
 	if player_postion != null:
 		var dir_to_player = global_position.direction_to(player_postion).normalized()
 		velocity.x = dir_to_player.x * SPEED + knockback_velocity.x
@@ -74,7 +75,7 @@ func _on_enemy_hurtbox_area_entered(area):
 	if not is_queued_for_deletion():
 		flash_damage()
 	#health_bar.value -= area.damage
-	var player_postion: Vector3 = get_tree().get_first_node_in_group("Player").global_position
+	var player_postion: Vector3 = player.global_position
 	knockback_velocity = (global_position.direction_to(player_postion) * -1) * 8
 	knockback_velocity.y = 0
 

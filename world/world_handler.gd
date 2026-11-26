@@ -6,8 +6,12 @@ extends Node3D
 @onready var animator: AnimationPlayer = %NightCycleAnimationPlayer
 var is_night: bool = false
 
-@export var day_length: float
-@export var night_length: float
+@onready var intro_arrow_tree: Sprite3D = %introarrowtree
+@onready var intro_arrow_rock: Sprite3D = %introarrowrock
+
+
+@export var day_length: float = 30.0
+@export var night_length: float = 30.0
 
 var normalized_timer: float
 
@@ -17,6 +21,12 @@ func _ready() -> void:
 	print("timer set to " + str(day_night_timer.wait_time))
 	animator.play("sunandmoonrotation")
 	animator.speed_scale = 0.0
+
+	intro_arrow_tree.visible = true
+	intro_arrow_rock.visible = true
+	create_tween().tween_property(intro_arrow_tree, "visible", false, 10)
+	create_tween().tween_property(intro_arrow_rock, "visible", false, 10)
+
 	if is_night:
 		set_night_lights()
 	else:

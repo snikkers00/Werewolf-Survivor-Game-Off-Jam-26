@@ -12,13 +12,15 @@ func _ready():
 	Resources.wood_label = %WoodLabel
 	Resources.stone_label = %StoneLabel
 	world_progress.max_value = int(world_timer.wait_time)
+	EventsBus.phase_changed.connect(_on_phase_changed)
 	
 
 func _process(_delta):
 	world_progress.max_value = int(world_timer.wait_time)
 	world_progress.value = int(world_timer.time_left)
-	
-	if world_handler.is_night == true:
+
+func _on_phase_changed(is_night: bool) -> void:
+	if is_night:
 		day_night_label.text = "Night:" + str(RunStats.days_lasted + 1)
-	elif  world_handler.is_night == false:
+	else:
 		day_night_label.text = "Day:" + str(RunStats.days_lasted + 1)

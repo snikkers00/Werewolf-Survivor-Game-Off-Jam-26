@@ -2,12 +2,15 @@ extends CanvasLayer
 
 @onready var pause_panel: Panel = $PanelPanel
 @onready var settings_panel: Panel = $SettingsPanel
+@onready var close_game_button: Button = $PanelPanel/HBoxContainer/CloseGameButton
 
 
 func _ready() -> void:
 	pause_panel.hide()
 	settings_panel.hide()
 	settings_panel.closed.connect(pause_panel.show)
+	if OS.has_feature("web"):
+		close_game_button.hide()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -41,6 +44,7 @@ func _on_settings_button_pressed() -> void:
 func _on_restart_button_pressed() -> void:
 	AudioManager.play_sound("click")
 	RunStats.reset_stats()
+	Resources.reset_resources()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
