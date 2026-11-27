@@ -24,13 +24,8 @@ Planned Features (cut for the Jam):
 - Crafting Talismans with Advanced Materials for more advanced buffs
 - More maps and Characters
 
-Asset Attribution:
-- All UI and 3D Models are Kenny's (https://kenney.nl/)
-- Skill Effects and Icons - (https://game-icons.net/)
-- Music - (https://opengameart.org/content/ominous-approach)
-- Human Sprite - (https://rvros.itch.io/animated-pixel-hero)
-- WW Sprite - (https://free-game-assets.itch.io/free-werewolf-sprite-sheets-pixel-art)
-
+See [third-party notices and licensing](LICENSES/README.md) for asset credits,
+license information, and checks still needed before redistribution.
 
 Run the game:
 1. Install Godot 4.7 or a compatible newer 4.x version.
