@@ -62,9 +62,3 @@ from Kenney.
 Levinzon, is included under `addons/asset_placer/` and has its own
 [MIT license](../addons/asset_placer/LICENSE). Preserve its copyright and
 license notice when redistributing it.
-## Before release
-Complete the unresolved provenance, modification, and redistribution checks
-above. Preserve all required notices and license texts, and provide applicable
-credits and license information with the distributed game as well as the
-source. The Godot Web export is configured to export selected scenes, so do
-not assume this folder is automatically included in the exported files.
