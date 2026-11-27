@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://driw7jvb7ossf" path="res://ui/title_screen.gd" id="1_7xhpk"]
 [ext_resource type="PackedScene" uid="uid://b4hokgkltdlyf" path="res://world/main_world.tscn" id="2_6qcwj"]
-[ext_resource type="FontFile" uid="uid://rkfho2d2dx4x" path="res://ui/blood_crow/bloodcrow.ttf" id="2_l1ku3"]
 [ext_resource type="StyleBox" uid="uid://bvxjktmlxd6xp" path="res://ui/upgradebox_normal.tres" id="3_6qcwj"]
+[ext_resource type="FontFile" uid="uid://cimpg47na4jjf" path="res://ui/MidnightSpree-Regular.otf" id="3_wa5rm"]
 [ext_resource type="StyleBox" uid="uid://csb47j7n4xoyy" path="res://ui/upgradebox_pressed.tres" id="4_wa5rm"]
 [ext_resource type="StyleBox" uid="uid://bmtlikpa74git" path="res://ui/upgradebox_hover.tres" id="5_sfunj"]
 [ext_resource type="PackedScene" uid="uid://bc0a312608lo6" path="res://ui/settings_panel.tscn" id="6_settings"]
@@ -36,7 +36,7 @@ offset_right = 283.5
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_l1ku3")
+theme_override_fonts/font = ExtResource("3_wa5rm")
 theme_override_font_sizes/font_size = 64
 text = "Werewolf Survivor"
 horizontal_alignment = 1

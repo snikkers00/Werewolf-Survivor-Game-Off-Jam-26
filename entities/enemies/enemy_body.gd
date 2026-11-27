@@ -66,7 +66,7 @@ func die():
 	EventsBus.xp_gained.emit(enemy_xp_value)
 	RunStats.enemies_killed += 1
 	if is_boss == true:
-		EventsBus.boss_defeated.emit()
+		EventsBus.boss_defeated.emit(true)
 	queue_free()
 
 

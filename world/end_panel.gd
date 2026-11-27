@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func _on_game_win(win: bool):
 	get_tree().paused = true
-	if win:
+	if win == true:
 		endlabel.text = "You Win!"
 	else:
 		endlabel.text = "Game Over"

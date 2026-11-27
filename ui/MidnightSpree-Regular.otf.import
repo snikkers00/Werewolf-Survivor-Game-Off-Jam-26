@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cy2ooqhvy0t53"
-path="res://.godot/imported/bloodcrowci.ttf-4211aad592b7d16e1094950f87452d35.fontdata"
+uid="uid://cimpg47na4jjf"
+path="res://.godot/imported/MidnightSpree-Regular.otf-e71569eec00c45e632778fbd4673d173.fontdata"
 
 [deps]
 
-source_file="res://ui/blood_crow/bloodcrowci.ttf"
-dest_files=["res://.godot/imported/bloodcrowci.ttf-4211aad592b7d16e1094950f87452d35.fontdata"]
+source_file="res://ui/MidnightSpree-Regular.otf"
+dest_files=["res://.godot/imported/MidnightSpree-Regular.otf-e71569eec00c45e632778fbd4673d173.fontdata"]
 
 [params]
 

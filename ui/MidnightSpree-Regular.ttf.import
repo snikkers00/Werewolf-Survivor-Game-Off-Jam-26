@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://beclrjvu8vfr5"
-path="res://.godot/imported/bloodcrows.ttf-919b64f720b31f742f42aebede15570d.fontdata"
+uid="uid://prylafma5k15"
+path="res://.godot/imported/MidnightSpree-Regular.ttf-3ab8db92de4d241e9e766b1001f87c79.fontdata"
 
 [deps]
 
-source_file="res://ui/blood_crow/bloodcrows.ttf"
-dest_files=["res://.godot/imported/bloodcrows.ttf-919b64f720b31f742f42aebede15570d.fontdata"]
+source_file="res://ui/MidnightSpree-Regular.ttf"
+dest_files=["res://.godot/imported/MidnightSpree-Regular.ttf-3ab8db92de4d241e9e766b1001f87c79.fontdata"]
 
 [params]
 

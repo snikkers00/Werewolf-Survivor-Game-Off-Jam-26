@@ -16,7 +16,8 @@ config/version="0.1.7"
 run/main_scene="uid://berdtmyw5rs1o"
 run/disable_stdout=true
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="uid://bsmyj3vdewi13"
+config/icon="uid://5tqsy157qkgh"
+config/windows_native_icon="uid://5tqsy157qkgh"
 run/disable_stdout.release=true
 
 [audio]
